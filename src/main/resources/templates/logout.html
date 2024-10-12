@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Salir</title>
+    </head>
+    <body>
+        <div>
+            <h1>Salir</h1>            
+            
+            <p>¿Confirma que desea salir?</p>
+
+            <form method="post">                
+                <div>
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                    <input type="submit" value="Salir">
+                </div>
+            </form>                      
+        </div>        
+    </body>
+</html>
