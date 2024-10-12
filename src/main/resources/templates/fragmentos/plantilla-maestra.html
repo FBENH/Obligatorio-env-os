@@ -4,51 +4,140 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+    <!-- ICONOS -->
+    <link
+    href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css"
+    rel="stylesheet"
+/>    
+    <link rel="stylesheet" th:href="@{/css/navegacion.css}">
+
 </head>
-<body>
-    <header class="cabezal">
-        <h1>Envíos Bios</h1>
+<body>    
+    <header class="header">
+        <nav class="nav container">
+            <div class="nav__data">
+                <a th:href="@{/}" class="nav__logo">
+                    <i class="ri-truck-line"></i> Bios Envíos
+                </a>
+
+                <div class="nav__toggle" id="nav-toggle">
+                    <i class="ri-menu-line nav__burger"></i>
+                    <i class="ri-close-line nav__close"></i>
+                </div>
+            </div>
+            <!-- MENU -->
+             <div class="nav__menu" id="nav-menu">
+                <ul class="nav__lista">                    
+                    <li>
+                        <a th:href="@{/}" class="nav__link">Inicio</a>
+                    </li>
+                    <!-- SUBMENU -->
+                    <li sec:authorize="hasAuthority('Empleado')" class="dropdown__item">
+                        <div class="nav__link">
+                            Mantenimiento<i class="ri-arrow-down-s-line dropdown__arrow"></i>
+                        </div>
+                        <ul class="dropdown__menu">
+                            <li>
+                                <a th:href="@{/paquetes}" class="dropdown__link">
+                                    <i class="ri-box-3-line"></i> Paquetes
+                                </a>
+                            </li>
+
+                            <li>
+                                <a th:href="@{/sucursales}" class="dropdown__link">
+                                    <i class="ri-building-line"></i> Sucursales
+                                </a>
+                            </li>
+
+                            <li>
+                                <a th:href="@{/empleados}" class="dropdown__link">
+                                    <i class="ri-group-line"></i> Empleados
+                                </a>
+                            </li>
+
+                            <li>
+                                <a th:href="@{/categorias}" class="dropdown__link">
+                                    <i class="ri-book-shelf-line"></i> Categorías
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="@{/estadosrastreo}" class="dropdown__link">
+                                    <i class="ri-crosshair-2-line"></i> Estados De Rastreo
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li sec:authorize="hasAuthority('Cliente') or isAnonymous()" class="dropdown__item">
+                        <div class="nav__link">
+                            Envíos<i class="ri-arrow-down-s-line dropdown__arrow"></i>
+                        </div>
+                        <ul class="dropdown__menu">
+                            <li>
+                                <a th:href="@{/paquetes/registrar}" class="dropdown__link">
+                                    <i class="ri-box-3-line"></i> Nuevo Envío
+                                </a>
+                            </li>
+
+                            <li>
+                                <a th:href="@{/paquetes/listar}" class="dropdown__link">
+                                    <i class="ri-list-check"></i> Ver Mis Envíos
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li sec:authorize="isAnonymous()" class="dropdown__item">
+                        <div class="nav__link">
+                            Ingresar<i class="ri-arrow-down-s-line dropdown__arrow"></i>
+                        </div>
+                        <ul class="dropdown__menu">
+                            <li>
+                                <a th:href="@{/ingresar}" class="dropdown__link">
+                                    <i class="ri-login-box-line"></i> Iniciar Sesión
+                                </a>
+                            </li>
+
+                            <li>
+                                <a th:href="@{/registrarcliente}" class="dropdown__link">
+                                    <i class="ri-add-box-line"></i> Registrarse
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
+
+                    <li sec:authorize="isAuthenticated()" class="dropdown__item">
+                        <div class="nav__link">
+                            <a href="#" sec:authentication="name" th:style="'color: #fff;'"></a><i class="ri-arrow-down-s-line dropdown__arrow"></i>
+                        </div>
+                        <ul class="dropdown__menu">
+                            <li>
+                                <a th:href="@{/salir}" class="dropdown__link">
+                                    <i class="ri-login-box-line"></i> Salir
+                                </a>
+                            </li>
+                        </ul>
+                    </li>                    
+                </ul>
+             </div>
+        </nav>
+
     </header>
-    <nav class="navegacion">
-        <ul>
-            <li>
-                <a th:href="@{/}">Inicio</a>
-            </li>
-
-            <li sec:authorize="hasAuthority('Empleado')">
-                <a href="#">Mantenimiento</a>
-                <ul>
-                    <li><a th:href="@{/sucursales}">Sucursales</a></li>
-                    <li><a th:href="@{/empleados}">Empleados</a></li>
-                    <li><a th:href="@{/categorias}">Categorías</a></li>
-                    <li><a th:href="@{/estadosrastreo}">Estados de Rastreo</a></li>
-                    <li><a th:href="@{/paquetes}">Paquetes</a></li>
-                </ul>
-            </li>
-        </ul>
-        <ul>  
-            <li sec:authorize="hasAuthority('Cliente') or isAnonymous()"><a href="#">Envíos</a>
-                <ul>
-                    <li><a th:href="@{/paquetes/registrar}">Realizar</a></li>
-                    <li><a th:href="@{/paquetes/listar}">Listar</a></li>
-                </ul>
-            </li>        
-            
-            <li sec:authorize="isAnonymous()">
-                <a th:href="@{/ingresar}">Ingresar</a>
-                <ul>
-                    <li><a th:href="@{/registrarcliente}">Registro</a></li>
-                </ul>
-            </li>
-            <li sec:authorize="isAuthenticated()">
-                <a href="#" sec:authentication="name"></a>
-                <ul>
-                    <li><a th:href="@{/salir}">Salir</a></li>
-                </ul>
-            </li>
-        </ul>       
-    </nav>
-
+    <script>
+            const showMenu = (toggleId, navId) =>{
+            const toggle = document.getElementById(toggleId),
+                nav = document.getElementById(navId)
+        
+            toggle.addEventListener('click', () =>{
+                // Add show-menu class to nav menu
+                nav.classList.toggle('show-menu')
+        
+                // Add show-icon to show and hide the menu icon
+                toggle.classList.toggle('show-icon')
+            })
+        }
+        
+        showMenu('nav-toggle','nav-menu')
+    </script>
 </body>
 </html>

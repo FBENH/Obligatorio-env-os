@@ -1,0 +1,297 @@
+/* Estilo de letra */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+/* Variables */
+
+:root {
+    --header-height: 3.5rem;
+    /* Colores */
+    --negro: hsl(220, 24%, 12%);
+    --negro-claro: hsl(220, 24%, 15%);
+    --negro-mas-claro: hsl(220, 20%, 18%);
+    --blanco: #fff;
+    --color-body: hsl(220, 100%, 97%);
+
+    /* Letra */
+    --letra-body: "Montserrat", sans-serif;
+    --letra-tamanio-normal: 1rem;
+
+    /* Peso de letra */
+    --peso-regular: 400;
+    --peso-semi-negrita: 600;
+
+    /* z index */
+    --z-herramientas: 10;
+    --z-fijo: 100;
+}
+
+
+/* Base */
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    font-family: var(--letra-body);
+    font-size: var(--letra-tamanio-normal);
+    background-color: var(--color-body);
+}
+
+ul {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;    
+}
+
+a:visited {
+    color: var(--blanco);
+}
+
+/* Clases css reutilizables */
+.container {
+    max-width: 1120px;
+    margin-inline: 1.5rem;
+}
+
+/* Header */
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--negro);
+    box-shadow: 0 2px 16px hsla(220, 32%, 8%, .3);
+    z-index: var(--z-fijo);
+}
+
+/* Nav */
+
+.nav {
+    height: var(--header-height);
+}
+
+.nav__logo,
+.nav__burger,
+.nav__close {
+   color: var(--blanco); 
+}
+
+.nav__data {
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav__logo {
+    display: inline-flex;
+    align-items: center;
+    column-gap: .25rem;
+    font-weight: var(--peso-semi-negrita);
+}
+
+.nav__logo i {
+    font-weight: initial;
+    font-size: 1.25rem;
+}
+
+.nav__toggle {
+    position: relative;
+    width: 32px;
+    height: 32px;    
+}
+
+.nav__burger,
+.nav__close{
+    position: absolute;
+    width: max-content;
+    height: max-content;
+    inset: 0;
+    margin: auto;
+    font-size: 1.25rem;
+    cursor: pointer;
+    transition: opacity .1s, transform .4s;
+}
+
+.nav__close {
+    opacity: 0;
+}
+
+/* Responsive */
+@media screen and (max-width: 1118px) {
+    .nav__menu{
+        position: absolute;
+        left: 0;
+        top: 2.5rem;
+        width: 100%;        
+        height: calc(100vh - 30.5rem);
+        overflow: auto;
+        pointer-events: none;
+        opacity: 0;
+        transition: top .4s, opacity .3s;
+    }
+
+    .nav__menu::-webkit-scrollbar{
+        width: 0;
+    }
+
+    .nav__list {
+        background-color: var(--negro);
+        padding-top: 1rem;
+    }
+}
+
+.nav__link {
+    color: var(--blanco);
+    background-color: var(--negro);
+    font-weight: var(--peso-semi-negrita);
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color .3s;
+    cursor: pointer;
+}
+
+.nav__link:hover {
+    background-color: var(--negro-claro);
+}
+
+/* Show Menu */
+.show-menu {
+    opacity: 1;
+    top: 3.5rem;
+    pointer-events: initial;
+}
+
+/* Show Icon */
+.show-icon .nav__burger {
+    opacity: 0;
+    transform: rotate(90deg);
+}
+.show-icon .nav__close {
+    opacity: 1;
+    transform: rotate(90deg);
+}
+
+/* Dropdown */
+.dropdown__item{
+    cursor: pointer;
+    background-color: var(--negro);
+}
+
+.dropdown__arrow{
+    font-size: 1.25rem;
+    font-weight: initial;
+    transition: transform .4s;
+}
+
+.dropdown__link{
+    padding: 1.25rem 1.25rem 1.25rem 2.5rem;
+    color: var(--blanco);
+    background-color: var(--negro-claro);
+    display: flex;
+    align-items: center;
+    column-gap: .5rem;
+    font-weight: var(--peso-semi-negrita);
+    transition: background-color .3s;
+}
+
+.dropdown__link i {
+    font-size: 1.25rem;
+    font-weight: initial;
+}
+
+.dropdown__link:hover {
+    background-color: var(--negro);
+}
+
+.dropdown__menu {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height .4s ease-out;
+}
+
+/* Show dropdown menu */
+.dropdown__item:hover .dropdown__menu{
+    max-height: 1000px;
+    transition: max-height .4s ease-in;
+}
+
+/* BreakPoints */
+/* small */
+@media screen and (max-width: 340px) {
+    .container{
+        margin-inline: 1rem;
+    }
+    .nav__link {
+        padding-inline: 1rem;
+    }
+}
+
+/* large */
+@media screen and (min-width: 1118px) {
+    .container {
+        margin-inline: auto;
+    }
+
+    .nav {
+        height: 5.5rem;
+        display: flex;
+        justify-content: space-between;
+    }
+    
+    .nav__toggle {
+        display: none;
+    }
+
+    .nav__lista {
+        height: 100%;
+        display: flex;
+        column-gap: 3rem;
+    }
+
+    .nav__link{
+        height: 100%;
+        padding: 0;
+        justify-content: initial;
+        column-gap: 0.25rem;
+    }
+
+    .nav__link:hover{
+        background-color: transparent;
+    }
+
+    .dropdown__item{
+        position: relative;
+    }
+
+    .dropdown__menu{
+        max-height: initial;
+        overflow: initial;
+        position: absolute;
+        left: 0;
+        top: 6rem;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity .3s, top .3s;
+        white-space: nowrap;
+    }
+
+    .dropdown__link{
+        padding-inline: 1rem 3.5rem;
+    }
+
+    .dropdown__item:hover .dropdown__menu {
+        opacity: 1;
+        top: 5.5rem;
+        pointer-events: initial;
+        transition: top .3s;        
+    }
+
+}
