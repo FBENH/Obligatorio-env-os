@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragmentos/plantilla-maestra::html(~{::title}, ~{::body})}">
     <head>
         <title>Salir</title>
     </head>
-    <body>
+    <body th:remove="tag">
         <div>
             <h1>Salir</h1>            
             
@@ -12,7 +12,7 @@
             <form method="post">                
                 <div>
                     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-                    <input type="submit" value="Salir">
+                    <input type="submit" value="Salir" class="boton">
                 </div>
             </form>                      
         </div>        

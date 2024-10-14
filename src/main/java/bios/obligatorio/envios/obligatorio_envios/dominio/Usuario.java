@@ -80,7 +80,7 @@ public class Usuario {
         this.correo = correo;
     }
 
-    public Usuario(@NotBlank String nombreUsuario, @NotBlank String clave, String correo, @NotNull Boolean activo) {
+    public Usuario(@NotBlank String nombreUsuario, @NotBlank String clave, String correo, boolean activo) {
         this.nombreUsuario = nombreUsuario;
         this.clave = clave;
         this.correo = correo;
@@ -89,6 +89,7 @@ public class Usuario {
     }
 
     public Usuario() {
+        this(null, null, null,true);
     }
 
     

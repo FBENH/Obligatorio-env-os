@@ -25,7 +25,7 @@ public class ConfiguracionSeguridad {
         .requestMatchers("/empleados","/empleados/agregar","/empleados/modificar","/empleados/eliminar").hasAuthority("Empleado")
         .requestMatchers("/categorias","/categorias/agregar","/categorias/modificar","/categorias/eliminar").hasAuthority("Empleado")
         .requestMatchers("/registrarcliente").anonymous()
-        .requestMatchers("/micuenta/editar","/micuenta/eliminar").hasAuthority("Cliente")
+        .requestMatchers("/micuenta/editar","/micuenta/eliminar","/micuenta").hasAuthority("Cliente")
         .requestMatchers("/estadosrastreo","estadosrastreo/agregar","/estadosrastreo/modificar","/estadosrastreo/eliminar").hasAuthority("Empleado")
         .requestMatchers("/paquetes","/paquetes/agregar","/paquetes/modificar","/paquetes/eliminar").hasAuthority("Empleado")
         .requestMatchers("/paquetes/registrar","/paquetes/listar").hasAuthority("Cliente")

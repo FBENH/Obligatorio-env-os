@@ -19,11 +19,7 @@ public class Empleado extends Usuario {
 
     public void setSucursal(Sucursal sucursal) {
         this.sucursal = sucursal;
-    }
-
-
-    public Empleado() {
-    }
+    }    
 
     public Empleado(@NotBlank String nombreUsuario, @NotBlank String clave, String correo, @NotNull Boolean activo,
             Sucursal sucursal) {
@@ -34,10 +30,5 @@ public class Empleado extends Usuario {
     public Empleado(Sucursal sucursal) {
         this.sucursal = sucursal;
     }
-
     
-
-    
-
-
 }

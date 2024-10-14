@@ -3,14 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Bios Envío - Inicio</title>
     <!-- ICONOS -->
     <link
     href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css"
     rel="stylesheet"
 />    
-    <link rel="stylesheet" th:href="@{/css/navegacion.css}">
-
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">    
 </head>
 <body>    
     <header class="header">
@@ -111,6 +110,11 @@
                             <a href="#" sec:authentication="name" th:style="'color: #fff;'"></a><i class="ri-arrow-down-s-line dropdown__arrow"></i>
                         </div>
                         <ul class="dropdown__menu">
+                            <li sec:authorize="hasAuthority('Cliente')">
+                                <a th:href="@{/micuenta}" class="dropdown__link">
+                                    <i class="ri-account-circle-line"></i> Mi cuenta
+                                </a>
+                            </li>
                             <li>
                                 <a th:href="@{/salir}" class="dropdown__link">
                                     <i class="ri-login-box-line"></i> Salir
@@ -123,6 +127,9 @@
         </nav>
 
     </header>
+
+    <main class="contenido" th:insert="${contenido}"></main>
+
     <script>
             const showMenu = (toggleId, navId) =>{
             const toggle = document.getElementById(toggleId),

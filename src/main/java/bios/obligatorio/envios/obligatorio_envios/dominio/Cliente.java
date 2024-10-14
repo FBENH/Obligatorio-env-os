@@ -70,7 +70,7 @@ public class Cliente extends Usuario {
 
     public Cliente(@NotBlank String nombreUsuario, @NotBlank String clave, String correo, @NotNull Boolean activo,
             @NotBlank String cedula, @NotBlank String domicilio, @NotBlank String telefono, List<Paquete> paquetes) {
-        super(nombreUsuario, clave, correo, activo);
+        super(nombreUsuario, clave, correo,activo);
         this.cedula = cedula;
         this.domicilio = domicilio;
         this.telefono = telefono;
@@ -83,10 +83,6 @@ public class Cliente extends Usuario {
         this.domicilio = domicilio;
         this.telefono = telefono;
         this.paquetes = paquetes;
-    }
-
-    
-
-    
+    }   
     
 }

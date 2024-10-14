@@ -7,8 +7,7 @@
     --header-height: 3.5rem;
     /* Colores */
     --negro: hsl(220, 24%, 12%);
-    --negro-claro: hsl(220, 24%, 15%);
-    --negro-mas-claro: hsl(220, 20%, 18%);
+    --negro-claro: hsl(220, 24%, 15%);    
     --blanco: #fff;
     --color-body: hsl(220, 100%, 97%);
 
@@ -37,6 +36,11 @@ body {
     font-family: var(--letra-body);
     font-size: var(--letra-tamanio-normal);
     background-color: var(--color-body);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 ul {
@@ -295,3 +299,87 @@ a:visited {
     }
 
 }
+
+
+/* Formulario login */
+.formulario {
+    padding: 40px 0;
+    color: var(--blanco);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background-color: var(--negro-claro);
+    transform: translate(-50%,-50%);
+    width: 400px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.404);   
+}
+
+.formulario h1 {
+    text-align: center;
+    padding: 0 0 20px 0;
+    border-bottom: 1px solid silver;    
+}
+
+.formulario form {
+    padding: 0 40px;
+    box-sizing: border-box;
+}
+.formulario label {
+    display: block;
+    padding: 1rem;
+    /* border-bottom: 2px solid #adadad; */
+}
+
+form .username {
+    position: relative;
+    border-bottom: 2px solid #adadad;
+    margin: 10px 0;
+}
+
+.username input {
+    width: 100%;
+    padding: 0 5px;
+    height: 40px;
+    font-size: 16px;
+    border: none;
+    background-color: none;
+    outline: none;
+    background-color: #000;
+    color: var(--blanco);
+    margin-bottom: 0.5rem;
+}
+
+.boton {
+    color: var(--blanco);
+    font-size: 1rem;
+    font-family: var(--letra-body);
+    padding: 1rem;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    width: 100%;
+    background-color: #000;
+    cursor: pointer;
+}
+
+.boton:hover{
+    opacity: 0.7;
+}
+
+.formulario a, .formulario a:visited{
+    color: rgb(220, 110, 20);
+}
+
+.formulario a:hover{
+    opacity: 0.7;
+}
+
+.errores {
+    color: crimson;
+    font-size: 0.85rem;
+    padding: 1px;
+    white-space: nowrap;
+}
+
