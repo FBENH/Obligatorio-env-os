@@ -31,4 +31,5 @@ public class Empleado extends Usuario {
         this.sucursal = sucursal;
     }
     
+    public Empleado() {}
 }

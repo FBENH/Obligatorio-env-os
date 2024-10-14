@@ -15,8 +15,7 @@ BEGIN
             (3, 'Juguetes');   
 
         -- Insertar datos en la tabla roles
-        INSERT INTO roles (nombre_rol) VALUES 
-            ('Admin'), 
+        INSERT INTO roles (nombre_rol) VALUES             
             ('Cliente'), 
             ('Empleado');
 
