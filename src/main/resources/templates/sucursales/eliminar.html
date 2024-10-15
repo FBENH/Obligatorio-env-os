@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragmentos/plantilla-maestra::html(~{::title}, ~{::body})}">
+<head>    
+    <title>Envíos Bios - Sucursales - Eliminar</title>   
+</head>
+<body th:remove="tag">
+    <h1>Eliminar Sucursal</h1>
+    <form th:if="${sucursal}" method="post" th:object="${sucursal}">
+        ¿Confirma que desea eliminar la sucursal?
+        <div>
+            <h2 th:text="*{nombre}"></h2>
+            <p th:text="*{numero}"></p>           
+        </div>        
+        <div>
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+            <input type="submit" value="Eliminar" class="boton">
+        </div>
+    </form>
+    
+    <p th:if="${mensaje}" th:text="${mensaje}"></p>    
+    
+</body>
+</html>

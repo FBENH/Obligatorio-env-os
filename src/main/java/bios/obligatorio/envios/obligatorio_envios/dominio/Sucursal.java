@@ -40,6 +40,11 @@ public class Sucursal {
     public Sucursal() {
     }
 
+    @Override
+    public String toString() {
+        return "Sucursal [numero=" + numero + ", nombre=" + nombre + "]";
+    }
+
     
 
 

@@ -3,9 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sucursales</title>
+    <title>Envíos Bios - Sucursales</title>
 </head>
-<body>
-    Sucursales works!
+<body th:remove="tag">
+    <h1>Sucursales</h1>
+
+    <p th:if="${mensaje}" th:text="${mensaje}"></p>
+
+    <form id="formularioBusqueda">
+        <div>
+            <input type="search" name="criterio" th:value="${param.criterio}" id="criterio" placeholder="Número o Nombre" value="Buscar">
+        </div>
+    </form>
+
+    <p><a th:href="@{sucursales/agregar}" title="Agregar"><i class="ri-add-large-fill"></i></a></p>
+
+    <table class="listado">
+        <tr>
+            <th>Número</th><th>Nombre</th>
+        </tr>
+        <tr th:each="s : ${sucursales}">
+            <td th:text="${s.numero}"></td>
+            <td th:text="${s.nombre}"></td>
+            <td>
+                <a th:href="@{/sucursales/{numero}(numero=${s.numero})}" title="Ver Detalle"><i class="ri-eye-fill"></i></a>
+                <a th:href="@{/sucursales/modificar(numero=${s.numero})}" title="Modificar"><i class="ri-pencil-fill"></i></a>
+                <a th:href="@{/sucursales/eliminar(numero=${s.numero})}" title="Eliminar"><i class="ri-delete-bin-6-fill"></i></a>                
+            </td>
+        </tr>
+    </table>
+
+    <p>Cantidad de sucursales: <span th:text="${sucursales.size()}"></span></p>
+
+    <script>
+        document.getElementById('formularioBusqueda').addEventListener('search', function() {
+            if (!document.getElementById('criterio').value) {
+                window.location = '/sucursales';
+            }
+        });
+
+        document.getElementById('criterio').focus();
+        document.getElementById('criterio').select();
+    </script>
+
 </body>
 </html>

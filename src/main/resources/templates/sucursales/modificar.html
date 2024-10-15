@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragmentos/plantilla-maestra::html(~{::title}, ~{::body})}">
+<head>    
+    <title>Envíos Bios - Sucursales - Agregar</title>   
+</head>
+<body th:remove="tag">
+    <form th:if="${sucursal}" method="post" th:object="${sucursal}">
+        <div>
+            <label for="numero">Número</label>
+            <input type="number" th:field="*{numero}" id="numero" disabled>
+            <p th:errors="*{numero}" class="errores"></p>
+        </div>
+        <div>
+            <label for="nombre">Nombre</label>
+            <input type="text" th:field="*{nombre}">
+            <p th:errors="*{nombre}"></p>
+        </div>
+        <div>
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+            <input type="submit" value="Modificar" class="boton">
+        </div>
+    </form>
+    
+    <p th:if="${mensaje}" th:text="${mensaje}"></p>
+    
+    <script>
+        document.getElementById('nombre').focus();
+        document.getElementById('nombre').select();
+    </script>
+</body>
+</html>

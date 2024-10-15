@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragmentos/plantilla-maestra::html(~{::title}, ~{::body})}">
 <head>    
-    <title>Envíos Bios - Ingresar</title>
-    <link rel="stylesheet" href="../../resources/static/css/estilos.css">
+    <title>Envíos Bios - Ingresar</title>   
 </head>
 <body th:remove="tag">
     <div class="formulario">
@@ -24,12 +23,12 @@
     
         <br>
         <div class="registrarse">
-            ¿No tienes cuenta? <a th:href="@{/micuenta/registrarcliente}" class="registro">Regístrate aquí</a>.
+            ¿No tienes cuenta? <a th:href="@{/registrarcliente}" class="registro">Regístrate aquí</a>.
         </div>
         
     </div>
     
-    
+    <p th:if="${mensaje}" th:text="${mensaje}"></p>
 
     <script>
         document.getElementById('nombreUsuario').focus();

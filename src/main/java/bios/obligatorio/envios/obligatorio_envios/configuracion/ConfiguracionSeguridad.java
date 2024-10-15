@@ -21,7 +21,7 @@ public class ConfiguracionSeguridad {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(auth -> auth
         .requestMatchers("/","/static/**").permitAll()
-        .requestMatchers("/sucursales","/sucursales/agregar","/sucursales/modificar","/sucursales/eliminar").hasAuthority("Empleado")
+        .requestMatchers("/sucursales","/sucursales/**").hasAuthority("Empleado")
         .requestMatchers("/empleados","/empleados/agregar","/empleados/modificar","/empleados/eliminar").hasAuthority("Empleado")
         .requestMatchers("/categorias","/categorias/agregar","/categorias/modificar","/categorias/eliminar").hasAuthority("Empleado")
         .requestMatchers("/registrarcliente").anonymous()
