@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragmentos/plantilla-maestra::html(~{::title}, ~{::body})}">
 <head>    
-    <title>Envíos Bios - Sucursales - Agregar</title>   
+    <title>Envíos Bios - Sucursales - Modificar</title>   
 </head>
 <body th:remove="tag">
+    <h1>Modificar Sucursal</h1>
+    <a th:href="@{/sucursales}" class="volver underline">Volver</a>
     <form th:if="${sucursal}" method="post" th:object="${sucursal}">
         <div>
             <label for="numero">Número</label>

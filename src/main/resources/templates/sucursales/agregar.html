@@ -4,6 +4,8 @@
     <title>Envíos Bios - Sucursales - Agregar</title>   
 </head>
 <body th:remove="tag">
+    <h1>Agregar Sucursal</h1>
+    <a th:href="@{/sucursales}" class="volver underline">Volver</a>
     <form method="post" th:object="${sucursal}">
         <div>
             <label for="numero">Número</label>

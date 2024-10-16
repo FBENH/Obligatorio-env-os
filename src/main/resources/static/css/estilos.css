@@ -383,3 +383,15 @@ form .username {
     white-space: nowrap;
 }
 
+.volver, .volver:visited {
+    color: #0000EE;;        
+    padding: 0.3rem;
+}
+
+.volver:hover {
+    opacity: 0.7;
+}
+
+.underline {
+    text-decoration: underline;
+}

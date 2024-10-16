@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragmentos/plantilla-maestra::html(~{::title}, ~{::body})}">
+<head>    
+    <title>Envíos Bios - Empleados - Modificar</title>   
+</head>
+<body th:remove="tag">
+    <h1>Modificar Empleado</h1>
+    <a th:href="@{/empleados}" class="volver underline">Volver</a>
+    <form method="post" th:object="${empleado}">
+        <div>
+            <label for="nombreUsuario">Nombre de Usuario</label>
+            <input type="text" th:field="*{nombreUsuario}" id="nombreUsuario" disabled>
+            <p th:errors="*{nombreUsuario}" class="errores"></p>
+        </div>
+        <div>
+            <label for="contrasena">Contraseña</label>
+            <input type="password" th:field="*{clave}">
+            <p th:errors="*{clave}" class="errores"></p>
+        </div>
+        <div>
+            <label for="correo">Correo Electrónico</label>
+            <input type="email" th:field="*{correo}">
+            <p th:errors="*{correo}" class="errores"></p>
+        </div>
+        <div>
+            <label for="sucursal.numero">Sucursal</label>
+            <select th:field="*{sucursal.numero}">
+                <option th:each="s : ${sucursales}" th:value="${s.numero}" th:text="${s.nombre}"></option>
+                <p th:errors="*{sucursal.numero}" class="errores"></p>
+            </select>
+        </div>
+        <div>
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+            <input type="submit" value="Modificar" class="boton">
+        </div>
+    </form>
+    
+    <p th:if="${mensaje}" th:text="${mensaje}"></p>
+    
+    <script>
+        document.getElementById('numero').focus();
+        document.getElementById('numero').select();
+    </script>
+</body>
+</html>

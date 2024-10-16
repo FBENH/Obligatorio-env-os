@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragmentos/plantilla-maestra::html(~{::title}, ~{::body})}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Envíos Bios - Empleados</title>
+</head>
+<body th:remove="tag">
+    <h1>Empleados</h1>
+
+    <p th:if="${mensaje}" th:text="${mensaje}"></p>
+
+    <form id="formularioBusqueda">
+        <div>
+            <input type="search" name="criterio" th:value="${param.criterio}" id="criterio" placeholder="Nombre de usuario" value="Buscar">
+        </div>
+    </form>
+
+    <p><a th:href="@{empleados/agregar}" title="Agregar" class="volver"><i class="ri-add-large-fill"></i></a></p>
+
+    <table class="listado">
+        <tr>
+            <th>Usuario</th><th>Trabaja en</th>
+        </tr>
+        <tr th:each="e : ${empleados.content}">
+            <td th:text="${e.nombreUsuario}"></td>
+            <td th:text="${e.sucursal.nombre}"></td>
+            <td>
+                <a th:href="@{/empleados/{nombreUsuario}(nombreUsuario=${e.nombreUsuario})}" title="Ver Detalle" class="volver"><i class="ri-eye-fill"></i></a>
+                <a th:href="@{/empleados/modificar(nombreUsuario=${e.nombreUsuario})}" title="Modificar" class="volver"><i class="ri-pencil-fill"></i></a>
+                <a th:href="@{/empleados/eliminar(nombreUsuario=${e.nombreUsuario})}" title="Eliminar" class="volver"><i class="ri-delete-bin-6-fill"></i></a>                
+            </td>
+        </tr>
+    </table>
+
+    <p>Cantidad de Empleados: <span th:text="${empleados.totalElements}"></span></p>
+
+    <!-- Navegación de Páginas -->
+    <div class="pagination">
+        <span th:if="${empleados.hasPrevious()}">
+            <a th:href="@{empleados(pagina=${empleados.number - 1}, criterio=${param.criterio})}" class="volver">Anterior</a>
+        </span>
+        <span th:if="${empleados.hasNext()}">
+            <a th:href="@{empleados(pagina=${empleados.number + 1}, criterio=${param.criterio})}" class="volver">Siguiente</a>
+        </span>
+        <p>Página <span th:text="${empleados.number + 1}"></span> de <span th:text="${empleados.totalPages}"></span></p>
+    </div>
+
+    <script>
+        document.getElementById('formularioBusqueda').addEventListener('search', function() {
+            if (!document.getElementById('criterio').value) {
+                window.location = '/empleados';
+            }
+        });
+
+        document.getElementById('criterio').focus();
+        document.getElementById('criterio').select();
+    </script>
+
+</body>
+</html>

@@ -5,12 +5,15 @@
 </head>
 <body th:remove="tag">
     <h1>Detalle de Sucursal</h1>
-
+    <a th:href="@{/sucursales}" class="volver underline">Volver</a>
     <th:block th:if="${sucursal}">
         <h2 th:text="${sucursal.nombre}"></h2>
 
         <ul>
             <li>Número: <span th:text="${sucursal.numero}"></span></li>
+           <!--  En caso de mostrar los empleados de sucursal (También descomentar repositorio sucursal)  --> 
+            <!-- <h3 th:if="${#lists.size(sucursal.empleados) > 0}">Empleados: </h3>
+            <li th:each="e : ${sucursal.empleados}"><span th:text="${e.nombreUsuario}"></span></li> -->
         </ul>
     </th:block>
     
