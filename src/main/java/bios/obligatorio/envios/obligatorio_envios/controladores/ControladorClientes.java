@@ -1,6 +1,11 @@
 package bios.obligatorio.envios.obligatorio_envios.controladores;
 
+import java.util.Locale;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,6 +25,9 @@ public class ControladorClientes {
     
     @Autowired
     IServicioClientes servicioClientes;
+
+    @Autowired
+    private MessageSource messageSource;
 
     @GetMapping("/registrarcliente")
     public String registro(@ModelAttribute Cliente cliente) {
@@ -47,20 +55,96 @@ public class ControladorClientes {
     }
 
     @GetMapping("/micuenta")
-    public String miCuenta() {
+    public String miCuenta(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String nombreUsuario = authentication.getName();
+        Cliente cliente = servicioClientes.obtener(nombreUsuario);
+
+        if (cliente != null)
+            model.addAttribute("cliente",cliente);
+        else
+            model.addAttribute("mensaje", "Error. No se pudieron obtener los datos de la cuenta");
+
         return "clientes/mi-cuenta";
     }
 
     @GetMapping("/micuenta/editar")
-    public String editarCuenta() {
+    public String editarCuenta(@ModelAttribute Cliente cliente, Model model) {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String nombreUsuario = authentication.getName();
+        cliente = servicioClientes.obtener(nombreUsuario);
+
+        if (cliente != null)
+            model.addAttribute("cliente",cliente);
+        else
+            model.addAttribute("mensaje", "Error. No se pudieron obtener los datos de la cuenta");
+
 
         return "clientes/editar-cuenta";
     }
 
     @PostMapping("/micuenta/editar")
-    public String procesarEditarCuenta() {
+    public String procesarEditarCuenta(@ModelAttribute Cliente cliente, BindingResult result, Model model, RedirectAttributes attributes, @RequestParam(required = false) String passwordrepetida, 
+    @RequestParam(name = "grupo1") String cambiarContrasena) {
 
-        return "clientes/editar-cuenta";
+        System.out.println(cliente);
+
+        if (result.hasErrors()) {
+            model.addAttribute("mensaje", "Error al editar los datos de la cuenta.");
+            return "clientes/editar-cuenta";
+        }
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String nombreUsuario = authentication.getName();
+        cliente.setNombreUsuario(nombreUsuario);
+
+        try {            
+            //Validacion manual al no usar @Valid, permite no cambiar la contraseña ya que no se puede desencriptar de la db y llevarla a la vista
+            if (cliente.getNombreUsuario().isEmpty() || cliente.getNombreUsuario() == null) {
+                model.addAttribute("mensaje", messageSource.getMessage("NotBlank.cliente.nombreUsuario", null, Locale.getDefault()));
+                return "clientes/editar-cuenta";
+            }
+
+            if (cliente.getCedula().isEmpty() || cliente.getCedula() == null) {
+                model.addAttribute("mensaje", messageSource.getMessage("NotBlank.cliente.cedula", null, Locale.getDefault()));
+                return "clientes/editar-cuenta";
+            }
+
+            if (cliente.getDomicilio().isEmpty() || cliente.getDomicilio() == null) {
+                model.addAttribute("mensaje", messageSource.getMessage("NotBlank.cliente.domicilio", null, Locale.getDefault()));
+                return "clientes/editar-cuenta";
+            }
+            if (cliente.getTelefono().isEmpty() || cliente.getTelefono() == null) {
+                model.addAttribute("mensaje", messageSource.getMessage("NotBlank.cliente.telefono", null, Locale.getDefault()));
+                return "clientes/editar-cuenta";
+            }
+
+
+            if ("Si".equals(cambiarContrasena)) {                
+
+                if (cliente.getClave().isEmpty() || cliente.getClave() == null) {
+                    model.addAttribute("mensaje", messageSource.getMessage("NotBlank.cliente.clave", null, Locale.getDefault()));
+                    return "clientes/editar-cuenta";
+                }
+
+                if (!passwordrepetida.equals(cliente.getClave())) {
+                    model.addAttribute("mensaje", "Error. Las contraseñas no coinciden.");
+                    return "clientes/editar-cuenta";
+                }
+
+                servicioClientes.modificar(cliente, true);
+            }
+            else {
+                servicioClientes.modificar(cliente, false);
+            }
+
+            attributes.addFlashAttribute("mensaje", "Se han modificado los datos de la cuenta con éxito");
+            return "redirect:/micuenta";
+        } catch (ExcepcionProyectoEnvios e) {
+            model.addAttribute("mensaje", "Error al modificar la cuenta. " + e.getMessage());
+            return "clientes/editar-cuenta";
+        }    
     }
 
     @GetMapping("/micuenta/eliminar")
@@ -74,7 +158,5 @@ public class ControladorClientes {
 
         return "clientes/eliminar-cuenta";
     }
-
-
 
 }

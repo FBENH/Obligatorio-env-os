@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragmentos/plantilla-maestra::html(~{::title}, ~{::body})}">
+<head>    
+    <title>Envíos Bios - Clientes - Editar Cuenta</title>
+    <link rel="stylesheet" href="../static/css/estilos.css">   
+</head>
+<body th:remove="tag">
+    <div class="formulario-registro">
+        <h1>Editar</h1>
+        <form method="post" class="form-registro" th:object="${cliente}">
+            <div class="username-registro">                            
+                <input type="text" name="username" id="nombreUsuario" th:field="*{nombreUsuario}" disabled>
+                <label for="nombreUsuario">Nombre de Usuario</label> 
+                <p th:errors="*{nombreUsuario}" class="errores" th:style="'color:crimson;'"></p>
+            </div>
+            <div class="username-registro">                            
+                <input type="email" name="email" id="email" th:field="*{correo}">
+                <label for="email">Email</label> 
+                <p th:errors="*{correo}" class="errores"></p>
+            </div>
+            <div class="username-registro">                            
+                <input type="text" name="cedula" id="cedula" th:field="*{cedula}">
+                <label for="cedula">Cédula</label> 
+                <p th:errors="*{cedula}" class="errores"></p>
+            </div>
+            <div class="username-registro">                            
+                <input type="text" name="domicilio" id="domicilio" th:field="*{domicilio}">
+                <label for="domicilio">Domicilio</label> 
+                <p th:errors="*{domicilio}" class="errores"></p>
+            </div>
+            <div class="username-registro">                            
+                <input type="tel" name="telefono" id="telefono" th:field="*{telefono}">
+                <label for="telefono">Télefono</label> 
+                <p th:errors="*{telefono}" class="errores"></p>
+            </div>
+            <div>
+                <p>¿Desea cambiar la contraseña?</p>
+                <input type="radio" id="opcion1" name="grupo1" value="Si">
+                <label for="opcion1">Sí</label>
+                <input type="radio" id="opcion2" name="grupo1" value="No" checked="checked">
+                <label for="opcion2">No</label>
+            </div>
+            <div class="username-registro" hidden id="campos-contrasena">                             
+                <input type="password" name="password" id="contrasena" th:field="*{clave}">
+                <label for="contrasena">Nueva Contraseña</label>  
+                <p th:errors="*{clave}" class="errores"></p>
+            </div>
+            <div class="username-registro" hidden id="campos-contrasenarepetida">                             
+                <input type="password" name="passwordrepetida" id="contrasenarepetida">
+                <label for="contrasena">Repetir Contraseña</label>  
+            </div>
+            <div>
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                <input type="submit" value="Guardar" class="boton">
+            </div>
+        </form>
+    
+        <br>       
+    </div>    
+    <p th:if="${mensaje}" th:text="${mensaje}" class="errores"></p>
+    
+    
+
+    <script>
+        document.getElementById('email').focus();
+        document.getElementById('email').select();
+
+        const cambiarContrasena = document.getElementById("opcion1");
+        const noCambiarContrasena = document.getElementById("opcion2");
+        const camposContrasena = document.getElementById("campos-contrasena");
+        const camposRepetirContrasena = document.getElementById("campos-contrasenarepetida");
+        
+        function mostrarCampos() {
+            if (cambiarContrasena.checked) {            
+                camposContrasena.hidden = false;
+                camposRepetirContrasena.hidden = false;
+            } else {            
+                camposContrasena.hidden = true;
+                camposRepetirContrasena.hidden = true;
+            }
+            
+            sessionStorage.setItem('cambiarContrasena', cambiarContrasena.checked ? 'opcion1' : 'opcion2');
+        }        
+        
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const cambiarContrasenaGuardado = sessionStorage.getItem('cambiarContrasena');
+            
+            if (cambiarContrasenaGuardado) {
+                document.getElementById(cambiarContrasenaGuardado).checked = true; 
+                mostrarCampos();
+            }
+        });
+
+        cambiarContrasena.addEventListener('change', mostrarCampos);
+        noCambiarContrasena.addEventListener('change', mostrarCampos);
+        
+    </script>
+</body>
+</html>

@@ -25,6 +25,12 @@ public class Cliente extends Usuario {
     @Column(length = 80, nullable = false)
     String domicilio;
 
+    @Override
+    public String toString() {
+        return "Cliente [cedula=" + cedula + ", domicilio=" + domicilio + ", telefono=" + telefono + ", nombreUsuario="
+                + nombreUsuario + ", clave=" + clave + ", correo=" + correo + ", activo=" + activo + "]";
+    }
+
     @NotBlank
     @Column(length = 20, nullable = false)
     String telefono;

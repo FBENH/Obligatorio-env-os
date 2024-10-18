@@ -6,6 +6,8 @@ import bios.obligatorio.envios.obligatorio_envios.excepciones.ExcepcionProyectoE
 public interface IServicioClientes { 
         
     void registrar(Cliente cliente) throws ExcepcionProyectoEnvios;
+    Cliente obtener(String nombreUsuario);
+    void modificar(Cliente cliente, Boolean cambiarClave) throws ExcepcionProyectoEnvios;
 
     
 }

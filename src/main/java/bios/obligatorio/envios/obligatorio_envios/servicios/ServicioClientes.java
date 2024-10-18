@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import bios.obligatorio.envios.obligatorio_envios.dominio.Cliente;
 import bios.obligatorio.envios.obligatorio_envios.dominio.Rol;
+import bios.obligatorio.envios.obligatorio_envios.excepciones.ExcepcionNoExiste;
 import bios.obligatorio.envios.obligatorio_envios.excepciones.ExcepcionProyectoEnvios;
 import bios.obligatorio.envios.obligatorio_envios.excepciones.ExcepcionYaExiste;
 import bios.obligatorio.envios.obligatorio_envios.repositorios.IRepositorioClientes;
@@ -37,6 +38,35 @@ public class ServicioClientes implements IServicioClientes{
         roles.add(new Rol("Cliente"));
         
         cliente.setRoles(roles);
+
+        repositorioClientes.save(cliente);
+    }
+
+    @Override
+    public Cliente obtener(String nombreUsuario) {
+        return repositorioClientes.findById(nombreUsuario).orElse(null);
+    }
+
+    @Override
+    public void modificar(Cliente cliente, Boolean cambiarClave) throws ExcepcionProyectoEnvios {
+
+        Cliente existe = repositorioClientes.findById(cliente.getNombreUsuario()).orElse(null);
+
+        if (existe == null)
+            throw new ExcepcionNoExiste("El usuario a modificar no existe.");
+
+        Set<Rol> roles = new HashSet<>();
+        roles.add(new Rol("Cliente"));
+        
+        cliente.setRoles(roles);
+
+        if (cambiarClave) {
+            String contrasenaEncriptada = passwordEncoder.encode(cliente.getClave());
+            cliente.setClave(contrasenaEncriptada);
+        }
+        else {
+            cliente.setClave(existe.getClave());
+        }
 
         repositorioClientes.save(cliente);
     }
