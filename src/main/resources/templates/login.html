@@ -25,10 +25,10 @@
         <div class="registrarse">
             ¿No tienes cuenta? <a th:href="@{/registrarcliente}" class="registro">Regístrate aquí</a>.
         </div>
-        
+        <p th:if="${mensaje}" th:text="${mensaje}" class="errores"></p>
     </div>
     
-    <p th:if="${mensaje}" th:text="${mensaje}"></p>
+    
 
     <script>
         document.getElementById('nombreUsuario').focus();

@@ -25,4 +25,7 @@ public interface IRepositorioEmpleados extends JpaRepository<Empleado,String>, J
     @Override
     @EntityGraph(type = EntityGraphType.LOAD,attributePaths = {"roles"})
     Optional<Empleado> findById(String id);
+
+    @EntityGraph(type = EntityGraphType.LOAD,attributePaths = {"roles"})
+    Optional<Empleado> findByNombreUsuarioAndActivoTrue(String nombreUsuario);
 }

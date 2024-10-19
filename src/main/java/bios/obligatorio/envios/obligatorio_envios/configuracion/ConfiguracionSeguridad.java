@@ -46,4 +46,6 @@ public class ConfiguracionSeguridad {
     public WebSecurityCustomizer webSecurityCustomizer() {
         return web -> web.ignoring().requestMatchers("/css/**");
     }
+
+    
 }

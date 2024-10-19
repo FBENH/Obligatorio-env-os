@@ -18,7 +18,7 @@ import bios.obligatorio.envios.obligatorio_envios.repositorios.IRepositorioClien
 public class ServicioClientes implements IServicioClientes{
 
     @Autowired
-    private IRepositorioClientes repositorioClientes;
+    private IRepositorioClientes repositorioClientes;    
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -69,6 +69,23 @@ public class ServicioClientes implements IServicioClientes{
         }
 
         repositorioClientes.save(cliente);
+    }
+
+    @Override
+    public void eliminar(String nombreUsuario) throws ExcepcionProyectoEnvios {
+        Cliente existe = repositorioClientes.findByNombreUsuarioAndActivoTrue(nombreUsuario).orElse(null);
+
+        if (existe == null) {
+            throw new ExcepcionNoExiste("No existe el usuario " + nombreUsuario + ".");            
+        }
+
+        if (existe.getPaquetes().size() > 0) {
+            existe.setActivo(false);
+            repositorioClientes.save(existe);
+        }
+        else {
+            repositorioClientes.delete(existe);
+        }
     }
     
 }

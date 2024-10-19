@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,6 +19,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import bios.obligatorio.envios.obligatorio_envios.dominio.Cliente;
 import bios.obligatorio.envios.obligatorio_envios.excepciones.ExcepcionProyectoEnvios;
 import bios.obligatorio.envios.obligatorio_envios.servicios.IServicioClientes;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 
 @Controller
@@ -55,10 +58,9 @@ public class ControladorClientes {
     }
 
     @GetMapping("/micuenta")
-    public String miCuenta(Model model) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String nombreUsuario = authentication.getName();
-        Cliente cliente = servicioClientes.obtener(nombreUsuario);
+    public String miCuenta(Model model) {    
+        
+        Cliente cliente = servicioClientes.obtener(obtenerNombreUsuarioLogueado());
 
         if (cliente != null)
             model.addAttribute("cliente",cliente);
@@ -70,10 +72,8 @@ public class ControladorClientes {
 
     @GetMapping("/micuenta/editar")
     public String editarCuenta(@ModelAttribute Cliente cliente, Model model) {
-
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String nombreUsuario = authentication.getName();
-        cliente = servicioClientes.obtener(nombreUsuario);
+        
+        cliente = servicioClientes.obtener(obtenerNombreUsuarioLogueado());
 
         if (cliente != null)
             model.addAttribute("cliente",cliente);
@@ -94,10 +94,8 @@ public class ControladorClientes {
             model.addAttribute("mensaje", "Error al editar los datos de la cuenta.");
             return "clientes/editar-cuenta";
         }
-
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String nombreUsuario = authentication.getName();
-        cliente.setNombreUsuario(nombreUsuario);
+        
+        cliente.setNombreUsuario(obtenerNombreUsuarioLogueado());
 
         try {            
             //Validacion manual al no usar @Valid, permite no cambiar la contraseña ya que no se puede desencriptar de la db y llevarla a la vista
@@ -148,15 +146,37 @@ public class ControladorClientes {
     }
 
     @GetMapping("/micuenta/eliminar")
-    public String eliminarCuenta() {
+    public String eliminarCuenta(@ModelAttribute Cliente cliente, Model model) {
+
+        cliente = servicioClientes.obtener(obtenerNombreUsuarioLogueado());
+
+        if (cliente != null)
+            model.addAttribute("cliente",cliente);
+        else
+            model.addAttribute("mensaje", "Error. No se pudieron obtener los datos de la cuenta");
+
 
         return "clientes/eliminar-cuenta";
     }
 
     @PostMapping("/micuenta/eliminar")
-    public String procesarEliminarCuenta() {
+    public String procesarEliminarCuenta(RedirectAttributes attributes, Model model, HttpServletRequest request, HttpServletResponse response) {
 
-        return "clientes/eliminar-cuenta";
+        try {
+            servicioClientes.eliminar(obtenerNombreUsuarioLogueado());
+            attributes.addFlashAttribute("mensaje", "Se eliminó su cuenta con éxito");
+            SecurityContextLogoutHandler logoutHandler = new SecurityContextLogoutHandler();
+            logoutHandler.logout(request, response, SecurityContextHolder.getContext().getAuthentication());
+            return "redirect:/";
+        } catch (ExcepcionProyectoEnvios e) {
+            model.addAttribute("mensaje", "Error. " + e.getMessage());
+            return "clientes/eliminar-cuenta";
+        }        
     }
 
+
+    private String obtenerNombreUsuarioLogueado() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return  authentication.getName();        
+    }
 }

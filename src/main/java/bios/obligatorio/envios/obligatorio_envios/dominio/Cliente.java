@@ -35,7 +35,7 @@ public class Cliente extends Usuario {
     @Column(length = 20, nullable = false)
     String telefono;
 
-    @OneToMany
+    @OneToMany(mappedBy = "cliente")
     List<Paquete> paquetes = new ArrayList<>();
     
 

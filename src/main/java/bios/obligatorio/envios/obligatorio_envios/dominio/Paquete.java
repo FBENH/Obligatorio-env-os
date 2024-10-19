@@ -7,7 +7,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -50,6 +52,11 @@ public class Paquete {
     @ManyToOne
     @NotNull
     EstadoRastreo estadoRastreo;
+
+    @OneToOne
+    @NotNull
+    @JoinColumn(name = "nombre_usuario")
+    Cliente cliente;    
 
     public Integer getId() {
         return id;
@@ -113,6 +120,14 @@ public class Paquete {
 
     public void setEstadoRastreo(EstadoRastreo estadoRastreo) {
         this.estadoRastreo = estadoRastreo;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 
     public Paquete() {

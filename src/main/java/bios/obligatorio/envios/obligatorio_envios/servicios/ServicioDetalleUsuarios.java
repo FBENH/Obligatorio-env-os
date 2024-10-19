@@ -28,10 +28,10 @@ public class ServicioDetalleUsuarios implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-         Usuario usuario = repositorioEmpleados.findById(username).orElse(null);
+         Usuario usuario = repositorioEmpleados.findByNombreUsuarioAndActivoTrue(username).orElse(null);
 
         if (usuario == null) {
-            usuario = repositorioClientes.findById(username).orElse(null);
+            usuario = repositorioClientes.findByNombreUsuarioAndActivoTrue(username).orElse(null);
         }
 
         if (usuario == null || !usuario.isActivo()) throw new UsernameNotFoundException("El usuario no existe");

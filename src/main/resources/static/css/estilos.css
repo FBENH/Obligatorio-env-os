@@ -304,12 +304,8 @@ a:visited {
 /* Formulario login */
 .formulario {
     padding: 40px 0;
-    color: var(--blanco);
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    background-color: var(--negro-claro);
-    transform: translate(-50%,-50%);
+    color: var(--blanco);    
+    background-color: var(--negro-claro);    
     width: 400px;
     border-radius: 10px;
     text-align: center;
