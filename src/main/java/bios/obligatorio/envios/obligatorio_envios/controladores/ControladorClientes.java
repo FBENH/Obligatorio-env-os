@@ -1,10 +1,10 @@
 package bios.obligatorio.envios.obligatorio_envios.controladores;
 
+import java.security.Principal;
 import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
@@ -30,7 +30,7 @@ public class ControladorClientes {
     IServicioClientes servicioClientes;
 
     @Autowired
-    private MessageSource messageSource;
+    private MessageSource messageSource;    
 
     @GetMapping("/registrarcliente")
     public String registro(@ModelAttribute Cliente cliente) {
@@ -58,9 +58,9 @@ public class ControladorClientes {
     }
 
     @GetMapping("/micuenta")
-    public String miCuenta(Model model) {    
+    public String miCuenta(Model model, Principal principal) {    
         
-        Cliente cliente = servicioClientes.obtener(obtenerNombreUsuarioLogueado());
+        Cliente cliente = servicioClientes.obtener(principal.getName());
 
         if (cliente != null)
             model.addAttribute("cliente",cliente);
@@ -71,9 +71,9 @@ public class ControladorClientes {
     }
 
     @GetMapping("/micuenta/editar")
-    public String editarCuenta(@ModelAttribute Cliente cliente, Model model) {
+    public String editarCuenta(@ModelAttribute Cliente cliente, Model model, Principal principal) {
         
-        cliente = servicioClientes.obtener(obtenerNombreUsuarioLogueado());
+        cliente = servicioClientes.obtener(principal.getName());
 
         if (cliente != null)
             model.addAttribute("cliente",cliente);
@@ -86,7 +86,7 @@ public class ControladorClientes {
 
     @PostMapping("/micuenta/editar")
     public String procesarEditarCuenta(@ModelAttribute Cliente cliente, BindingResult result, Model model, RedirectAttributes attributes, @RequestParam(required = false) String passwordrepetida, 
-    @RequestParam(name = "grupo1") String cambiarContrasena) {
+    @RequestParam(name = "grupo1") String cambiarContrasena, Principal principal) {
 
         System.out.println(cliente);
 
@@ -95,7 +95,7 @@ public class ControladorClientes {
             return "clientes/editar-cuenta";
         }
         
-        cliente.setNombreUsuario(obtenerNombreUsuarioLogueado());
+        cliente.setNombreUsuario(principal.getName());
 
         try {            
             //Validacion manual al no usar @Valid, permite no cambiar la contraseña ya que no se puede desencriptar de la db y llevarla a la vista
@@ -146,9 +146,9 @@ public class ControladorClientes {
     }
 
     @GetMapping("/micuenta/eliminar")
-    public String eliminarCuenta(@ModelAttribute Cliente cliente, Model model) {
+    public String eliminarCuenta(@ModelAttribute Cliente cliente, Model model, Principal principal) {
 
-        cliente = servicioClientes.obtener(obtenerNombreUsuarioLogueado());
+        cliente = servicioClientes.obtener(principal.getName());
 
         if (cliente != null)
             model.addAttribute("cliente",cliente);
@@ -160,10 +160,10 @@ public class ControladorClientes {
     }
 
     @PostMapping("/micuenta/eliminar")
-    public String procesarEliminarCuenta(RedirectAttributes attributes, Model model, HttpServletRequest request, HttpServletResponse response) {
+    public String procesarEliminarCuenta(RedirectAttributes attributes, Model model, HttpServletRequest request, HttpServletResponse response, Principal principal) {
 
         try {
-            servicioClientes.eliminar(obtenerNombreUsuarioLogueado());
+            servicioClientes.eliminar(principal.getName());
             attributes.addFlashAttribute("mensaje", "Se eliminó su cuenta con éxito");
             SecurityContextLogoutHandler logoutHandler = new SecurityContextLogoutHandler();
             logoutHandler.logout(request, response, SecurityContextHolder.getContext().getAuthentication());
@@ -172,11 +172,5 @@ public class ControladorClientes {
             model.addAttribute("mensaje", "Error. " + e.getMessage());
             return "clientes/eliminar-cuenta";
         }        
-    }
-
-
-    private String obtenerNombreUsuarioLogueado() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return  authentication.getName();        
-    }
+    }   
 }

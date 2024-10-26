@@ -2,20 +2,23 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragmentos/plantilla-maestra::html(~{::title}, ~{::body})}">
 <head>    
     <title>Envíos Bios - Clientes - Cuenta</title>   
+    <link rel="stylesheet" href="../../static/css/estilos.css">
 </head>
 <body th:remove="tag">
     <h1>Detalle de Cuenta</h1>    
     <th:block th:if="${cliente}">
-        <ul>
-            <li>Nombre de Usuario: <span th:text="${cliente.nombreUsuario}"></span></li>
-            <li>Correo Electrónico: <span th:text="${cliente.correo}"></span></li>
-            <li>Cédula: <span th:text="${cliente.cedula}"></span></li>
-            <li>Domicilio: <span th:text="${cliente.domicilio}"></span></li>
-            <li>Teléfono: <span th:text="${cliente.telefono}"></span></li>           
-        </ul>
-        <a th:href="@{/micuenta/editar}">Editar cuenta</a>
-        <span> | </span>
-        <a th:href="@{/micuenta/eliminar}">Eliminar cuenta</a>
+        <div class="detalle-cuenta">
+            <ul>
+                <li>Nombre de Usuario: <span th:text="${cliente.nombreUsuario}"></span></li>
+                <li>Correo Electrónico: <span th:text="${cliente.correo}"></span></li>
+                <li>Cédula: <span th:text="${cliente.cedula}"></span></li>
+                <li>Domicilio: <span th:text="${cliente.domicilio}"></span></li>
+                <li>Teléfono: <span th:text="${cliente.telefono}"></span></li>           
+            </ul>
+            <a th:href="@{/micuenta/editar}" class="icono">Editar cuenta</a>
+            <span> | </span>
+            <a th:href="@{/micuenta/eliminar}" class="icono">Eliminar cuenta</a>
+        </div>        
     </th:block>
     
     <p th:if="${mensaje}" th:text="${mensaje}"></p>   

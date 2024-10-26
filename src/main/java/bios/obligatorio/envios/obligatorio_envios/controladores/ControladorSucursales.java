@@ -29,7 +29,7 @@ public class ControladorSucursales {
 
     @GetMapping
     public String sucursales(@RequestParam(required = false) String criterio, Model model) {
-        List<Sucursal> sucursales = servicioSucursales.buscar(criterio);
+        List<Sucursal> sucursales = servicioSucursales.buscar(criterio);        
         model.addAttribute("sucursales", sucursales);
         
         return "sucursales/index";

@@ -1,21 +1,22 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragmentos/plantilla-maestra::html(~{::title}, ~{::body})}">
 <head>    
-    <title>Envíos Bios - Empleados - Eliminar</title>   
+    <title>Envíos Bios - Empleados - Eliminar</title>       
 </head>
-<body th:remove="tag">
-    <h1>Eliminar Empleado</h1>
-    <a th:href="@{/empleados}" class="volver underline">Volver</a>
-    <form th:if="${empleado}" method="post" th:object="${empleado}">
-        ¿Confirma que desea eliminar el Empleado?
-        <div>
-            <h2 th:text="*{nombreUsuario}"></h2>                      
-        </div>        
-        <div>
-            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-            <input type="submit" value="Eliminar" class="boton">
-        </div>
-    </form>
+<body th:remove="tag">    
+    <div class="container-mensaje">
+        <h1>Eliminar Empleado</h1>
+        <form th:if="${empleado}" method="post" th:object="${empleado}">
+            ¿Confirma que desea eliminar el Empleado "<span th:text="*{nombreUsuario}"></span>" ?
+                   
+            <div>
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                <input type="submit" value="Eliminar" class="boton">
+            </div>
+        </form>
+        <a th:href="@{/empleados}" class="volver underline">Volver</a>
+    </div>
+    
     
     <p th:if="${mensaje}" th:text="${mensaje}"></p>    
     

@@ -16,19 +16,19 @@
         </div>
     </form>
 
-    <p><a th:href="@{sucursales/agregar}" title="Agregar" class="volver"><i class="ri-add-large-fill"></i></a></p>
+    <p><a th:href="@{sucursales/agregar}" title="Agregar" class="agregar"><i class="ri-add-circle-fill"></i></a></p>
 
     <table class="listado">
         <tr>
-            <th>Número</th><th>Nombre</th>
+            <th>Número</th><th>Nombre</th><th></th>
         </tr>
         <tr th:each="s : ${sucursales}">
             <td th:text="${s.numero}"></td>
             <td th:text="${s.nombre}"></td>
             <td>
-                <a th:href="@{/sucursales/{numero}(numero=${s.numero})}" title="Ver Detalle" class="volver"><i class="ri-eye-fill"></i></a>
-                <a th:href="@{/sucursales/modificar(numero=${s.numero})}" title="Modificar" class="volver"><i class="ri-pencil-fill"></i></a>
-                <a th:href="@{/sucursales/eliminar(numero=${s.numero})}" title="Eliminar" class="volver"><i class="ri-delete-bin-6-fill"></i></a>                
+                <a th:href="@{/sucursales/{numero}(numero=${s.numero})}" title="Ver Detalle" class="icono"><i class="ri-eye-fill"></i></a>
+                <a th:href="@{/sucursales/modificar(numero=${s.numero})}" title="Modificar" class="icono"><i class="ri-pencil-fill"></i></a>
+                <a th:href="@{/sucursales/eliminar(numero=${s.numero})}" title="Eliminar" class="icono"><i class="ri-delete-bin-6-fill"></i></a>                
             </td>
         </tr>
     </table>

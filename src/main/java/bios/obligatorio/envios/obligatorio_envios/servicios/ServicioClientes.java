@@ -6,6 +6,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import bios.obligatorio.envios.obligatorio_envios.dominio.Cliente;
 import bios.obligatorio.envios.obligatorio_envios.dominio.Rol;
@@ -24,6 +25,7 @@ public class ServicioClientes implements IServicioClientes{
     private PasswordEncoder passwordEncoder;
 
     @Override
+    @Transactional
     public void registrar(Cliente cliente) throws ExcepcionProyectoEnvios {
         
         Cliente existe = repositorioClientes.findById(cliente.getNombreUsuario()).orElse(null);
@@ -48,6 +50,7 @@ public class ServicioClientes implements IServicioClientes{
     }
 
     @Override
+    @Transactional
     public void modificar(Cliente cliente, Boolean cambiarClave) throws ExcepcionProyectoEnvios {
 
         Cliente existe = repositorioClientes.findById(cliente.getNombreUsuario()).orElse(null);
@@ -72,6 +75,7 @@ public class ServicioClientes implements IServicioClientes{
     }
 
     @Override
+    @Transactional
     public void eliminar(String nombreUsuario) throws ExcepcionProyectoEnvios {
         Cliente existe = repositorioClientes.findByNombreUsuarioAndActivoTrue(nombreUsuario).orElse(null);
 

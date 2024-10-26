@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragmentos/plantilla-maestra::html(~{::title}, ~{::body})}">
+<head>    
+    <title>Envíos Bios - Estado de Rastreo - Detalle</title>   
+</head>
+<body th:remove="tag">
+    <h1>Detalle de Estado de Rastreo</h1>
+    <a th:href="@{/estadosrastreo}" class="volver underline">Volver</a>
+    <th:block th:if="${estado}">
+        <h2 th:text="${estado.id}"></h2>
+
+        <ul>
+            <li>Descripcion: <span th:text="${estado.descripcion}"></span></li>        
+        </ul>
+    </th:block>
+    
+    <p th:if="${mensaje}" th:text="${mensaje}"></p>   
+</body>
+</html>

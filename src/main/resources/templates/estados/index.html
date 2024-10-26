@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragmentos/plantilla-maestra::html(~{::title}, ~{::body})}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Envíos Bios - Estados de Rastreo</title>
+</head>
+<body th:remove="tag">
+    <h1>Estados de Rastreo</h1>
+
+    <p th:if="${mensaje}" th:text="${mensaje}"></p>
+
+    <form id="formularioBusqueda">
+        <div>
+            <input type="search" name="criterio" th:value="${param.criterio}" id="criterio" placeholder="Descripcion" value="Buscar">
+        </div>
+    </form>
+
+    <p><a th:href="@{estadosrastreo/agregar}" title="Agregar" class="volver"><i class="ri-add-large-fill"></i></a></p>
+
+    <table class="listado">
+        <tr>
+            <th>Identidicador</th><th>Descripcion</th><th></th>
+        </tr>
+        <tr th:each="e : ${estados}">
+            <td th:text="${e.id}"></td>
+            <td th:text="${e.descripcion}"></td>
+            <td>
+                <a th:href="@{/estadosrastreo/{id}(id=${e.id})}" title="Ver Detalle" class="icono"><i class="ri-eye-fill"></i></a>
+                <a th:href="@{/estadosrastreo/modificar(id=${e.id})}" title="Modificar" class="icono"><i class="ri-pencil-fill"></i></a>
+                <a th:href="@{/estadosrastreo/eliminar(id=${e.id})}" title="Eliminar" class="icono"><i class="ri-delete-bin-6-fill"></i></a>                
+            </td>
+        </tr>
+    </table>
+
+    <!-- Navegación de Páginas -->
+    <div class="pagination">
+        <span th:if="${estados.hasPrevious()}">
+            <a th:href="@{estadosrastreo(pagina=${estados.number - 1}, criterio=${param.criterio})}" class="volver">Anterior</a>
+        </span>
+        <span th:if="${estados.hasNext()}">
+            <a th:href="@{estadosrastreo(pagina=${estados.number + 1}, criterio=${param.criterio})}" class="volver">Siguiente</a>
+        </span>
+        <p>Página <span th:text="${estados.number + 1}"></span> de <span th:text="${estados.totalPages}"></span></p>
+    </div>
+    
+    <script>
+        document.getElementById('formularioBusqueda').addEventListener('search', function() {
+            if (!document.getElementById('criterio').value) {
+                window.location = '/estadosrastreo';
+            }
+        });
+    
+        document.getElementById('criterio').focus();
+        document.getElementById('criterio').select();
+    </script>
+</body>
+</html>

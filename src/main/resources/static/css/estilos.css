@@ -40,7 +40,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: center; 
 }
 
 ul {
@@ -67,6 +67,7 @@ a:visited {
     position: fixed;
     top: 0;
     left: 0;
+    justify-self: flex-start;
     width: 100%;
     background-color: var(--negro);
     box-shadow: 0 2px 16px hsla(220, 32%, 8%, .3);
@@ -358,6 +359,7 @@ form .username {
     width: 100%;
     background-color: #000;
     cursor: pointer;
+    max-width: 300px;
 }
 
 .boton:hover{
@@ -379,9 +381,14 @@ form .username {
     white-space: nowrap;
 }
 
-.volver, .volver:visited {
-    color: #0000EE;;        
+.volver, .volver:visited, .icono, .icono:visited {
+    color: #0000EE;    
     padding: 0.3rem;
+    margin-top: 0.5rem;
+}
+
+.volver {
+    display: block;
 }
 
 .volver:hover {
@@ -390,4 +397,86 @@ form .username {
 
 .underline {
     text-decoration: underline;
+}
+
+
+
+.username-registro input,
+.username-registro label,
+.username-registro select, input {
+    padding: 0.25rem 0;
+    margin: 0.25rem 0;
+    width: 180px;    
+}
+
+select {
+    text-align: center;
+}
+
+.container-mensaje {
+    margin: 0.25rem 0;
+    text-align: center;
+}
+
+.container-mensaje h1,
+.container-mensaje p,
+.container-mensaje div {
+    margin: 1rem 0;
+}
+
+.detalle-cuenta {
+    padding: 1rem;
+}
+
+.detalle-cuenta li,
+.detalle-cuenta h2 {
+    margin-bottom: 0.5rem;
+    font-weight: var(--peso-semi-negrita);
+}
+
+.detalle-cuenta h1 {
+    margin-bottom: 2rem;
+}
+
+.detalle-cuenta li span {
+    font-weight: normal;
+}
+
+table, td, th {  
+border: 1px solid #000;
+text-align: left;
+}
+
+table {
+border-collapse: collapse;
+width: 405px;
+margin: 1rem 0;
+white-space: nowrap;
+}
+
+th, td {
+padding: 15px;    
+}
+
+
+th {
+background-color: var(--negro-claro);
+color: var(--blanco);
+}
+
+h1 {
+margin: 1rem 0;
+}
+
+.agregar, .agregar:visited {    
+color: var(--negro-claro); 
+font-size: 2rem;
+}
+
+.agregar:hover {
+opacity: 0.7;
+}
+
+#opcion1, #opcion2 {
+    width: fit-content;
 }

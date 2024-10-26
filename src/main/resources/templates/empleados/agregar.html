@@ -4,38 +4,40 @@
     <title>Envíos Bios - Empleados - Agregar</title>   
 </head>
 <body th:remove="tag">
-    <h1>Agregar Empleado</h1>
-    <a th:href="@{/empleados}" class="volver underline">Volver</a>
-    <form method="post" th:object="${empleado}">
-        <div>
-            <label for="nombreUsuario">Nombre de Usuario</label>
-            <input type="text" th:field="*{nombreUsuario}" id="nombreUsuario">
-            <p th:errors="*{nombreUsuario}" class="errores"></p>
-        </div>
-        <div>
-            <label for="contrasena">Contraseña</label>
-            <input type="password" th:field="*{clave}">
-            <p th:errors="*{clave}" class="errores"></p>
-        </div>
-        <div>
-            <label for="correo">Correo Electrónico</label>
-            <input type="email" th:field="*{correo}">
-            <p th:errors="*{correo}" class="errores"></p>
-        </div>
-        <div>
-            <label for="sucursal.numero">Sucursal</label>
-            <select th:field="*{sucursal.numero}">
-                <option th:each="s : ${sucursales}" th:value="${s.numero}" th:text="${s.nombre}"></option>
+    <div class="formulario-registro">
+        <h1>Agregar Empleado</h1>    
+        <form method="post" th:object="${empleado}" class="form-registro">
+            <div class="username-registro">
+                <input type="text" th:field="*{nombreUsuario}" id="nombreUsuario">
+                <label for="nombreUsuario">Nombre de Usuario</label>
+                <p th:errors="*{nombreUsuario}" class="errores"></p>
+            </div>
+            <div class="username-registro">
+                <input type="password" th:field="*{clave}">
+                <label for="contrasena">Contraseña</label>
+                <p th:errors="*{clave}" class="errores"></p>
+            </div>
+            <div class="username-registro">
+                <input type="email" th:field="*{correo}">
+                <label for="correo">Correo Electrónico</label>
+                <p th:errors="*{correo}" class="errores"></p>
+            </div>
+            <div class="username-registro">
+                <select th:field="*{sucursal.numero}">
+                    <option th:each="s : ${sucursales}" th:value="${s.numero}" th:text="${s.nombre}"></option>
+                </select>
+                <label for="sucursal.numero">Sucursal</label>
                 <p th:errors="*{sucursal.numero}" class="errores"></p>
-            </select>
-        </div>
-        <div>
-            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-            <input type="submit" value="Agregar" class="boton">
-        </div>
-    </form>
+            </div>
+            <div>
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                <input type="submit" value="Agregar" class="boton">
+            </div>
+        </form>
+        <a th:href="@{/empleados}" class="volver underline">Volver</a>
+    </div>
     
-    <p th:if="${mensaje}" th:text="${mensaje}"></p>
+    <p th:if="${mensaje}" th:text="${mensaje}" class="errores"></p>
     
     <script>
         document.getElementById('numero').focus();

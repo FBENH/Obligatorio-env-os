@@ -4,18 +4,18 @@
     <title>Envíos Bios - Empleados - Detalle</title>   
 </head>
 <body th:remove="tag">
-    <h1>Detalle de Empleado</h1>
-    <a th:href="@{/empleados}" class="volver underline">Volver</a>
-    <th:block th:if="${empleado}">
-        <h2 th:text="${empleado.nombreUsuario}"></h2>
-
-        <ul>
-            <li>Nombre de Usuario: <span th:text="${empleado.nombreUsuario}"></span></li>
-            <li>Correo Eléctronico: <span th:text="${empleado.correo}"></span></li>
-            <li>Sucursal: <span th:text="${empleado.sucursal.nombre}"></span></li>
-            <li>Activo: <span th:text="${empleado.activo ? 'Sí' : 'No'}"></span></li>           
-        </ul>
-    </th:block>
+    <div class="detalle-cuenta">
+        <h1>Detalle de Empleado</h1>    
+        <th:block th:if="${empleado}">
+            <ul>
+                <li>Nombre de Usuario: <span th:text="${empleado.nombreUsuario}"></span></li>
+                <li>Correo Eléctronico: <span th:text="${empleado.correo}"></span></li>
+                <li>Sucursal: <span th:text="${empleado.sucursal.nombre}"></span></li>
+                <li>Activo: <span th:text="${empleado.activo ? 'Sí' : 'No'}"></span></li>           
+            </ul>
+        </th:block>
+        <a th:href="@{/empleados}" class="volver underline">Volver</a>
+    </div>    
     
     <p th:if="${mensaje}" th:text="${mensaje}"></p>   
 </body>

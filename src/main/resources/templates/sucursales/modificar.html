@@ -4,24 +4,27 @@
     <title>Envíos Bios - Sucursales - Modificar</title>   
 </head>
 <body th:remove="tag">
-    <h1>Modificar Sucursal</h1>
-    <a th:href="@{/sucursales}" class="volver underline">Volver</a>
-    <form th:if="${sucursal}" method="post" th:object="${sucursal}">
-        <div>
-            <label for="numero">Número</label>
-            <input type="number" th:field="*{numero}" id="numero" disabled>
-            <p th:errors="*{numero}" class="errores"></p>
-        </div>
-        <div>
-            <label for="nombre">Nombre</label>
-            <input type="text" th:field="*{nombre}">
-            <p th:errors="*{nombre}"></p>
-        </div>
-        <div>
-            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-            <input type="submit" value="Modificar" class="boton">
-        </div>
-    </form>
+    <div class="formulario-registro">
+        <h1>Modificar Sucursal</h1>    
+        <form th:if="${sucursal}" method="post" th:object="${sucursal}" class="form-registro">
+            <div class="username-registro">
+                <input type="number" th:field="*{numero}" id="numero" disabled>
+                <label for="numero">Número</label>
+                <p th:errors="*{numero}" class="errores"></p>
+            </div>
+            <div class="username-registro">
+                <input type="text" th:field="*{nombre}">
+                <label for="nombre">Nombre</label>
+                <p th:errors="*{nombre}" class="errores"></p>
+            </div>
+            <div>
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                <input type="submit" value="Modificar" class="boton">
+            </div>
+        </form>
+        <a th:href="@{/sucursales}" class="volver underline">Volver</a>
+    </div>
+    
     
     <p th:if="${mensaje}" th:text="${mensaje}"></p>
     
