@@ -57,14 +57,18 @@ public class ServicioEmpleados implements IServicioEmpleados{
 
     @Override
     @Transactional
-    public void modificar(Empleado empleado) throws ExcepcionProyectoEnvios {
+    public void modificar(Empleado empleado, Boolean cambiarClave) throws ExcepcionProyectoEnvios {
 
         Empleado existe = repositorioEmpleados.findById(empleado.getNombreUsuario()).orElse(null);
 
         if (existe == null) throw new ExcepcionNoExiste("No existe un empleado con el nombre de usuario " + empleado.getNombreUsuario() + ".");
 
-        String contrasenaEncriptada = passwordEncoder.encode(empleado.getClave());
-        empleado.setClave(contrasenaEncriptada);
+        if (cambiarClave) {
+            String contrasenaEncriptada = passwordEncoder.encode(empleado.getClave());
+            empleado.setClave(contrasenaEncriptada);
+        } else {
+            empleado.setClave(existe.getClave());
+        }        
 
         Set<Rol> roles = new HashSet<>();
         roles.add(new Rol("Empleado"));

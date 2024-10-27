@@ -11,7 +11,7 @@ public interface IServicioEmpleados {
     Page<Empleado> buscar(String criterio, Pageable pageable);
     Empleado obtener(String nombreUsuario);
     void agregar(Empleado empleado) throws ExcepcionProyectoEnvios;
-    void modificar(Empleado empleado) throws ExcepcionProyectoEnvios;
+    void modificar(Empleado empleado, Boolean cambiarClave) throws ExcepcionProyectoEnvios;
     void eliminar(String nombreUsuario) throws ExcepcionProyectoEnvios;
 
 }

@@ -14,9 +14,9 @@
                 <li>Activo: <span th:text="${empleado.activo ? 'Sí' : 'No'}"></span></li>           
             </ul>
         </th:block>
+        <p th:if="${mensaje}" th:text="${mensaje}" class="errores"></p>  
         <a th:href="@{/empleados}" class="volver underline">Volver</a>
     </div>    
     
-    <p th:if="${mensaje}" th:text="${mensaje}"></p>   
 </body>
 </html>

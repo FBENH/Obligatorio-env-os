@@ -27,8 +27,8 @@ public class ConfiguracionSeguridad {
         .requestMatchers("/registrarcliente").anonymous()
         .requestMatchers("/micuenta/editar","/micuenta/eliminar","/micuenta").hasAuthority("Cliente")
         .requestMatchers("/estadosrastreo","estadosrastreo/**").hasAuthority("Empleado")
-        .requestMatchers("/paquetes","/paquetes/agregar","/paquetes/modificar","/paquetes/eliminar").hasAuthority("Empleado")
         .requestMatchers("/paquetes/registrar","/paquetes/listar").hasAuthority("Cliente")
+        .requestMatchers("/paquetes","/paquetes/**").hasAuthority("Empleado")        
         .anyRequest().authenticated()
         )
         .formLogin(form -> form

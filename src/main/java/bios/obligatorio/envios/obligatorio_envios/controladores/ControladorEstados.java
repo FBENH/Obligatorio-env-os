@@ -62,8 +62,17 @@ public class ControladorEstados {
     }
 
     @GetMapping("/{id}")
-    public String detalleEstado(@PathVariable Integer id, Model model) {
-        EstadoRastreo estadoRastreo = servicioEstadoRastreo.obtener(id);
+    public String detalleEstado(@PathVariable String id, Model model) {
+
+        Integer idEstado;
+        try {
+            idEstado = Integer.parseInt(id);
+        } catch (NumberFormatException e) {
+            model.addAttribute("mensaje", "Error. El identificador del Estado de Rastreo debe ser un número.");
+            return "estados/detalle";
+        }
+
+        EstadoRastreo estadoRastreo = servicioEstadoRastreo.obtener(idEstado);
 
         if (estadoRastreo != null) 
             model.addAttribute("estado", estadoRastreo);

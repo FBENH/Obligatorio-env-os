@@ -17,14 +17,8 @@ public interface IRepositorioEstadosRastreo extends JpaRepository<EstadoRastreo,
     @Override
     @EntityGraph(type = EntityGraphType.LOAD, attributePaths = {"estados_rastreo"})
     List<EstadoRastreo> findAll();
-
-    //Metodo con paginacion
-    Page<EstadoRastreo> findAll(Specification<EstadoRastreo> spec, Pageable pageable);
-
     
-    // @Override
-    // @EntityGraph(type = EntityGraphType.LOAD,attributePaths = {"id"})
-    // Optional<EstadoRastreo> findById(Integer id);
+    Page<EstadoRastreo> findAll(Specification<EstadoRastreo> spec, Pageable pageable);    
 
     Optional<EstadoRastreo> findById(Integer id);
     

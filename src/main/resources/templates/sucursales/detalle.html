@@ -9,16 +9,11 @@
         <th:block th:if="${sucursal}">
             <ul>
                 <li>Número: <span th:text="${sucursal.numero}"></span></li>
-                <li>Nombre: <span th:text="${sucursal.nombre}"></span></li>
-                <!-- <li>Empleados: <span th:text="${#lists.size(sucursal.empleados)}"></span></li> -->
-            <!--  En caso de mostrar los empleados de sucursal 
-                <h3 th:if="${#lists.size(sucursal.empleados) > 0}">Empleados: </h3>
-                <li th:each="e : ${sucursal.empleados}"><span th:text="${e.nombreUsuario}"></span></li>  -->
+                <li>Nombre: <span th:text="${sucursal.nombre}"></span></li>               
             </ul>
         </th:block>
+        <p th:if="${mensaje}" th:text="${mensaje}" class="errores"></p>   
         <a th:href="@{/sucursales}" class="volver underline">Volver</a>
-    </div>   
-    
-    <p th:if="${mensaje}" th:text="${mensaje}"></p>   
+    </div>     
 </body>
 </html>

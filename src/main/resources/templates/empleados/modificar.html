@@ -6,16 +6,22 @@
 <body th:remove="tag">
     <div class="formulario-registro">
         <h1>Modificar Empleado</h1>    
-        <form method="post" th:object="${empleado}" class="form-registro">
+        <form method="post" th:if="${empleado}" th:object="${empleado}" class="form-registro">
             <div class="username-registro">
                 <input type="text" th:field="*{nombreUsuario}" id="nombreUsuario" disabled>
                 <label for="nombreUsuario">Nombre de Usuario</label>
                 <p th:errors="*{nombreUsuario}" class="errores"></p>
             </div>
             <div class="username-registro">
-                <input type="password" th:field="*{clave}">
-                <label for="contrasena">Contraseña</label>
+                <input type="hidden" name="contrasenaFalsa" th:value="${contrasenaFalsa}" />
+                <input type="password" name="clave" id="clave" th:value="${contrasenaFalsa}" />
+                <label for="clave">Contraseña</label>
                 <p th:errors="*{clave}" class="errores"></p>
+            </div>
+            <div>
+                <input type="password" name="repetirContrasena" id="repetirContrasena" th:value="${contrasenaFalsa}" />
+                <label for="repetirContrasena">Repetir contraseña</label>
+                <p th:errors="*{repetirContrasena}" class="errores"></p>
             </div>
             <div class="username-registro">
                 <input type="email" th:field="*{correo}">
@@ -34,11 +40,11 @@
                 <input type="submit" value="Modificar" class="boton">
             </div>
         </form>
+        <p th:if="${mensaje}" th:text="${mensaje}" class="errores"></p>
         <a th:href="@{/empleados}" class="volver underline">Volver</a>
     </div>
     
     
-    <p th:if="${mensaje}" th:text="${mensaje}"></p>
     
     <script>
         document.getElementById('numero').focus();

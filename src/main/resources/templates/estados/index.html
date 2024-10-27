@@ -16,7 +16,7 @@
         </div>
     </form>
 
-    <p><a th:href="@{estadosrastreo/agregar}" title="Agregar" class="volver"><i class="ri-add-large-fill"></i></a></p>
+    <p><a th:href="@{estadosrastreo/agregar}" title="Agregar" class="agregar"><i class="ri-add-circle-fill"></i></a></p>
 
     <table class="listado">
         <tr>
@@ -38,6 +38,7 @@
         <span th:if="${estados.hasPrevious()}">
             <a th:href="@{estadosrastreo(pagina=${estados.number - 1}, criterio=${param.criterio})}" class="volver">Anterior</a>
         </span>
+        <span th:if="${estados.hasPrevious()} and ${estados.hasNext()}"> | </span>
         <span th:if="${estados.hasNext()}">
             <a th:href="@{estadosrastreo(pagina=${estados.number + 1}, criterio=${param.criterio})}" class="volver">Siguiente</a>
         </span>

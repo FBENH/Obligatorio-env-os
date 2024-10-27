@@ -1,9 +1,14 @@
 package bios.obligatorio.envios.obligatorio_envios.controladores;
 
 
+import java.security.Principal;
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,6 +24,8 @@ import bios.obligatorio.envios.obligatorio_envios.dominio.Empleado;
 import bios.obligatorio.envios.obligatorio_envios.excepciones.ExcepcionProyectoEnvios;
 import bios.obligatorio.envios.obligatorio_envios.servicios.IServicioEmpleados;
 import bios.obligatorio.envios.obligatorio_envios.servicios.IServicioSucursales;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 
 @Controller
@@ -79,20 +86,38 @@ public class ControladorEmpleados {
 
     @GetMapping("/modificar")
     public String modificarEmpleado(String nombreUsuario, Model model) {
+
+        Empleado empleado = servicioEmpleados.obtener(nombreUsuario);        
+
+        if (empleado != null) {
+            model.addAttribute("contrasenaFalsa", UUID.randomUUID().toString());
+            model.addAttribute("empleado",empleado);
+        }
+        else
+            model.addAttribute("mensaje", "Error. No se encontró un empleado con nombre de usuario " + nombreUsuario + ".");
+
         model.addAttribute("sucursales", servicioSucursales.buscar(null));
         model.addAttribute("empleado", servicioEmpleados.obtener(nombreUsuario));
         return "empleados/modificar";
     }
 
     @PostMapping("/modificar")
-    public String procesarModificarEmpleado(@ModelAttribute @Valid Empleado empleado, BindingResult result, RedirectAttributes attributes, Model model) {
+    public String procesarModificarEmpleado(@ModelAttribute @Valid Empleado empleado, BindingResult result, RedirectAttributes attributes, Model model,String contrasenaFalsa) {
         if (result.hasErrors()) {
             model.addAttribute("mensaje", "Error al modificar un empleado.");
             model.addAttribute("sucursales", servicioSucursales.buscar(null));
+            model.addAttribute("contrasenaFalsa", UUID.randomUUID().toString());
             return "empleados/modificar";
-        }
+        }         
         try {
-            servicioEmpleados.modificar(empleado);
+            if (empleado.getRepetirContrasena() == null || !empleado.getRepetirContrasena().equals(empleado.getClave())) {
+                model.addAttribute("contrasenaFalsa", UUID.randomUUID().toString());
+    
+                throw new ExcepcionProyectoEnvios("Las contraseñas no coinciden.");
+            } 
+
+            servicioEmpleados.modificar(empleado, !empleado.getClave().equals(contrasenaFalsa));            
+
             attributes.addFlashAttribute("mensaje","Se modificó un empleado con éxito.");
             return "redirect:/empleados";
         } catch (ExcepcionProyectoEnvios e) {
@@ -104,16 +129,33 @@ public class ControladorEmpleados {
 
     @GetMapping("/eliminar")
     public String eliminarEmpleado(String nombreUsuario, Model model) {
+        Empleado empleado = servicioEmpleados.obtener(nombreUsuario);
+
+        if (empleado != null) 
+            model.addAttribute("empleado",empleado);
+        else
+            model.addAttribute("mensaje", "Error. No se encontró un empleado con nombre de usuario " + nombreUsuario + ".");
+
         model.addAttribute("empleado", servicioEmpleados.obtener(nombreUsuario));
 
         return "empleados/eliminar";
     }
 
     @PostMapping("/eliminar")
-    public String procesarEliminarEmpleado(String nombreUsuario, RedirectAttributes attributes, Model model) {
+    public String procesarEliminarEmpleado(String nombreUsuario, RedirectAttributes attributes, Model model,HttpServletRequest request, HttpServletResponse response, Principal principal) {
         try {
             servicioEmpleados.eliminar(nombreUsuario);
             attributes.addFlashAttribute("mensaje", "Se eliminó el empleado");
+
+            if (nombreUsuario.equals(principal.getName())) {
+                var auth = SecurityContextHolder.getContext().getAuthentication();
+                if (auth != null) {
+                    new SecurityContextLogoutHandler().logout(request, response, auth);
+                }
+            
+                return "redirect:/"; 
+            }
+            
 
             return "redirect:/empleados";
         } catch (ExcepcionProyectoEnvios e) {

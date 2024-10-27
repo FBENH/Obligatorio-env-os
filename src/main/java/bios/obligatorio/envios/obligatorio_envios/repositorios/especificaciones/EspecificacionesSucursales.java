@@ -1,5 +1,6 @@
 package bios.obligatorio.envios.obligatorio_envios.repositorios.especificaciones;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 
 import bios.obligatorio.envios.obligatorio_envios.dominio.Sucursal;
@@ -41,6 +42,12 @@ public class EspecificacionesSucursales {
     }
 
 
+
+    public static Specification<Sucursal> buscarConPaginacion(String criterio, Pageable pageable) {
+        if (criterio == null || criterio.isBlank()) return null;
+
+        return Specification.where(numeroSucursalIgualA(criterio)).or(nombreSucursalContiene(criterio));
+    }
 
     public static Specification<Sucursal> buscar(String criterio) {
         if (criterio == null || criterio.isBlank()) return null;

@@ -41,6 +41,7 @@
         <span th:if="${empleados.hasPrevious()}">
             <a th:href="@{empleados(pagina=${empleados.number - 1}, criterio=${param.criterio})}" class="icono" style="padding: 0;">Anterior</a>
         </span>
+        <span th:if="${empleados.hasPrevious()} and ${empleados.hasNext()}"> | </span>
         <span th:if="${empleados.hasNext()}">
             <a th:href="@{empleados(pagina=${empleados.number + 1}, criterio=${param.criterio})}" class="icono" style="padding: 0;">Siguiente</a>
         </span>

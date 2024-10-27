@@ -6,32 +6,29 @@ import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 
 @Entity
 @Table(name = "clientes")
-public class Cliente extends Usuario {   
+public class Cliente extends Usuario {    
     
     @NotBlank
-    @Column(length = 8, nullable = false)
+    @Size(min = 8, max = 8)
+    @Column(length = 8, nullable = false, unique = true)    
     String cedula;
 
     @NotBlank
+    @Size(max = 80)
     @Column(length = 80, nullable = false)
-    String domicilio;
-
-    @Override
-    public String toString() {
-        return "Cliente [cedula=" + cedula + ", domicilio=" + domicilio + ", telefono=" + telefono + ", nombreUsuario="
-                + nombreUsuario + ", clave=" + clave + ", correo=" + correo + ", activo=" + activo + "]";
-    }
+    String domicilio;   
 
     @NotBlank
+    @Size(max = 20)
     @Column(length = 20, nullable = false)
     String telefono;
 

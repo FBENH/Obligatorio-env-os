@@ -7,7 +7,6 @@
 </head>
 <body th:remove="tag">
     <h1>Agregar Estado de Rastreo.</h1>
-    <a th:href="@{/estadosrastreo}" class="volver underline">Volver</a>
 
     <form method="post" th:object="${estadoRastreo}">
         <div>
@@ -18,11 +17,10 @@
         <div>
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
             <input type="submit" value="Agregar" class="boton">
-        </div>
-    </form> 
-
-    <p th:if="${mensaje}" th:text="${mensaje}"></p>
-    
+        </div>        
+    </form>  
+    <p th:if="${mensaje}" th:text="${mensaje}" class="errores"></p>
+    <a th:href="@{/estadosrastreo}" class="volver underline">Volver</a>   
     <script>
         document.getElementById('descripcion').focus();
         document.getElementById('descripcion').select();

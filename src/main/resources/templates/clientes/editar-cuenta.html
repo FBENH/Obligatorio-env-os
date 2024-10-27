@@ -9,9 +9,9 @@
         <h1>Editar</h1>
         <form method="post" class="form-registro" th:object="${cliente}">
             <div class="username-registro">                            
-                <input type="text" name="username" id="nombreUsuario" th:field="*{nombreUsuario}" disabled>
+                <input type="text" name="username" id="nombreUsuario" th:field="*{nombreUsuario}" readonly>
                 <label for="nombreUsuario">Nombre de Usuario</label> 
-                <p th:errors="*{nombreUsuario}" class="errores" th:style="'color:crimson;'"></p>
+                <p th:errors="*{nombreUsuario}" class="errores"></p>
             </div>
             <div class="username-registro">                            
                 <input type="email" name="email" id="email" th:field="*{correo}">
@@ -32,22 +32,17 @@
                 <input type="tel" name="telefono" id="telefono" th:field="*{telefono}">
                 <label for="telefono">Télefono</label> 
                 <p th:errors="*{telefono}" class="errores"></p>
-            </div>
-            <div>
-                <p>¿Desea cambiar la contraseña?</p>
-                <input type="radio" id="opcion1" name="grupo1" value="Si">
-                <label for="opcion1">Sí</label>
-                <input type="radio" id="opcion2" name="grupo1" value="No" checked="checked">
-                <label for="opcion2">No</label>
-            </div>
-            <div class="username-registro" hidden id="campos-contrasena">                             
-                <input type="password" name="password" id="contrasena" th:field="*{clave}">
-                <label for="contrasena">Nueva Contraseña</label>  
+            </div>            
+            <div class="username-registro">
+                <input type="hidden" name="contrasenaFalsa" th:value="${contrasenaFalsa}" />
+                <input type="password" name="clave" id="clave" th:value="${contrasenaFalsa}" />
+                <label for="clave">Contraseña</label>
                 <p th:errors="*{clave}" class="errores"></p>
             </div>
-            <div class="username-registro" hidden id="campos-contrasenarepetida">                             
-                <input type="password" name="passwordrepetida" id="contrasenarepetida">
-                <label for="contrasena">Repetir Contraseña</label>  
+            <div>
+                <input type="password" name="repetirContrasena" id="repetirContrasena" th:value="${contrasenaFalsa}" />
+                <label for="repetirContrasena">Repetir contraseña</label>
+                <p th:errors="*{repetirContrasena}" class="errores"></p>
             </div>
             <div>
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
@@ -63,37 +58,7 @@
 
     <script>
         document.getElementById('email').focus();
-        document.getElementById('email').select();
-
-        const cambiarContrasena = document.getElementById("opcion1");
-        const noCambiarContrasena = document.getElementById("opcion2");
-        const camposContrasena = document.getElementById("campos-contrasena");
-        const camposRepetirContrasena = document.getElementById("campos-contrasenarepetida");
-        
-        function mostrarCampos() {
-            if (cambiarContrasena.checked) {            
-                camposContrasena.hidden = false;
-                camposRepetirContrasena.hidden = false;
-            } else {            
-                camposContrasena.hidden = true;
-                camposRepetirContrasena.hidden = true;
-            }
-            
-            sessionStorage.setItem('cambiarContrasena', cambiarContrasena.checked ? 'opcion1' : 'opcion2');
-        }        
-        
-        document.addEventListener('DOMContentLoaded', (event) => {
-            const cambiarContrasenaGuardado = sessionStorage.getItem('cambiarContrasena');
-            
-            if (cambiarContrasenaGuardado) {
-                document.getElementById(cambiarContrasenaGuardado).checked = true; 
-                mostrarCampos();
-            }
-        });
-
-        cambiarContrasena.addEventListener('change', mostrarCampos);
-        noCambiarContrasena.addEventListener('change', mostrarCampos);
-        
+        document.getElementById('email').select();        
     </script>
 </body>
 </html>

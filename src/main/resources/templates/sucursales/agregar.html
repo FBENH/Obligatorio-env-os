@@ -22,12 +22,9 @@
                 <input type="submit" value="Agregar" class="boton">
             </div>
         </form>
+        <p th:if="${mensaje}" th:text="${mensaje}" class="errores"></p>
         <a th:href="@{/sucursales}" class="volver underline">Volver</a>
-    </div>
-    
-    
-    <p th:if="${mensaje}" th:text="${mensaje}"></p>
-    
+    </div>    
     <script>
         document.getElementById('numero').focus();
         document.getElementById('numero').select();

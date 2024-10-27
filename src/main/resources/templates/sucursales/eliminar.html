@@ -4,7 +4,7 @@
     <title>Envíos Bios - Sucursales - Eliminar</title>      
 </head>
 <body th:remove="tag">
-        <div class="container-mensaje">
+    <div class="container-mensaje">
         <h1>Eliminar Sucursal</h1>
         <form th:if="${sucursal}" method="post" th:object="${sucursal}">
             ¿Confirma que desea eliminar la sucursal <span th:text="*{numero}"></span> "<span th:text="*{nombre}"></span>" ?                  
@@ -13,10 +13,8 @@
                 <input type="submit" value="Eliminar" class="boton">
             </div>
         </form>
+        <p th:if="${mensaje}" th:text="${mensaje}" class="errores"></p>    
         <a th:href="@{/sucursales}" class="volver underline">Volver</a>
-    </div>    
-    
-    <p th:if="${mensaje}" th:text="${mensaje}"></p>    
-    
+    </div>     
 </body>
 </html>

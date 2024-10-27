@@ -5,7 +5,6 @@
 </head>
 <body th:remove="tag">
     <h1>Detalle de Estado de Rastreo</h1>
-    <a th:href="@{/estadosrastreo}" class="volver underline">Volver</a>
     <th:block th:if="${estado}">
         <h2 th:text="${estado.id}"></h2>
 
@@ -14,6 +13,7 @@
         </ul>
     </th:block>
     
-    <p th:if="${mensaje}" th:text="${mensaje}"></p>   
+    <p th:if="${mensaje}" th:text="${mensaje}" class="errores"></p>   
+    <a th:href="@{/estadosrastreo}" class="volver underline">Volver</a>
 </body>
 </html>

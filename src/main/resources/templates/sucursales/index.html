@@ -33,7 +33,16 @@
         </tr>
     </table>
 
-    <p>Cantidad de sucursales: <span th:text="${sucursales.size()}"></span></p>
+    <div class="pagination">
+        <span th:if="${sucursales.hasPrevious()}">
+            <a th:href="@{sucursales(pagina=${sucursales.number - 1}, criterio=${param.criterio})}" class="volver">Anterior</a>
+        </span>
+        <span th:if="${sucursales.hasPrevious()} and ${sucursales.hasNext()}"> | </span>
+        <span th:if="${sucursales.hasNext()}">
+            <a th:href="@{sucursales(pagina=${sucursales.number + 1}, criterio=${param.criterio})}" class="volver">Siguiente</a>
+        </span>
+        <p>Página <span th:text="${sucursales.number + 1}"></span> de <span th:text="${sucursales.totalPages}"></span></p>
+    </div>
 
     <script>
         document.getElementById('formularioBusqueda').addEventListener('search', function() {

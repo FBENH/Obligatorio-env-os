@@ -12,5 +12,6 @@ public interface IServicioCategorias {
     Categoria obtener(Integer id);
     void modificar(Categoria categoria) throws ExcepcionProyectoEnvios;
     void eliminar(Integer id) throws ExcepcionProyectoEnvios;
+    List<Categoria> listar();
 
 }

@@ -3,10 +3,12 @@ BEGIN
     IF NOT EXISTS (SELECT * FROM categorias)
     THEN
         -- Insertar datos en la tabla estados_rastreo
-        INSERT INTO estados_rastreo (id, descripcion) VALUES 
-            (1, 'En tránsito'), 
-            (2, 'Entregado'), 
-            (3, 'Pendiente');
+        INSERT INTO estados_rastreo (id, descripcion, activo) VALUES 
+            (1, 'A levantar',b'1'), 
+            (2, 'Levantado',b'1'), 
+            (3, 'En Reparto',b'1'),
+            (4, 'Entregado',b'1'),
+            (5, 'Devuelto',b'1');
 
         -- Insertar datos en la tabla categorias
         INSERT INTO categorias (id, nombre) VALUES 
@@ -55,8 +57,8 @@ BEGIN
         -- Insertar datos en la tabla clientes (incluir todas las columnas)
         INSERT INTO clientes (cedula, domicilio, telefono, nombre_usuario) VALUES 
             ('12345678', 'Calle Falsa 123', '099123456', 'juan123'), 
-            ('12345678', 'Calle Falsa 123', '099123456', 'pedro123'), 
-            ('12345678', 'Calle Falsa 123', '099123456', 'jorge123'), 
+            ('23456789', 'Calle Falsa 123', '099123456', 'pedro123'), 
+            ('97564216', 'Calle Falsa 123', '099123456', 'jorge123'), 
             ('87654321', 'Av. Siempre Viva 742', '099654321', 'ana456');
 
         -- Insertar datos en la tabla empleados (incluir todas las columnas)
@@ -85,7 +87,11 @@ BEGIN
         -- Insertar datos en la tabla paquetes (incluir todas las columnas)
         INSERT INTO paquetes (id, cobroadestinatario, direccion_destinatario, fecha_hora, nombre_destinatario, telefono_destinatario, categoria_id, estado_rastreo_id, nombre_usuario) VALUES 
             (1, b'0', 'Calle Luna 12', '2024-10-01 12:34:56', 'Pedro Pérez', '099111222', 1, 1, 'juan123'), 
-            (2, b'1', 'Calle Sol 34', '2024-10-02 13:45:56', 'Luis López', '099333444', 2, 2, 'ana456');
+            (2, b'1', 'Calle Sol 34', '2024-10-02 13:45:56', 'Luis López', '099333444', 2, 2, 'ana456'),
+            (3, b'0', 'Calle Luna 12', '2024-10-01 12:34:56', 'Pedro Pérez', '099111222', 1, 3, 'juan123'), 
+            (4, b'1', 'Calle Sol 34', '2024-10-02 13:45:56', 'Luis López', '099333444', 2, 4, 'ana456'),
+            (5, b'0', 'Calle Luna 12', '2024-10-01 12:34:56', 'Pedro Pérez', '099111222', 1, 5, 'juan123'), 
+            (6, b'1', 'Calle Sol 34', '2024-10-02 13:45:56', 'Luis López', '099333444', 2, 3, 'ana456');
 
         -- Insertar datos en la tabla clientes_paquetes (incluir todas las columnas)
         /* INSERT INTO clientes_paquetes (cliente_nombre_usuario, paquetes_id) VALUES 

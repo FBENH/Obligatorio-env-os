@@ -4,21 +4,17 @@
     <title>Envíos Bios - Estado de Rastreo - Eliminar</title>   
 </head>
 <body th:remove="tag">
-    <h1>Eliminar Estado de Rastreo</h1>
-    <a th:href="@{/estadosrastreo}" class="volver underline">Volver</a>
-    <form th:if="${estado}" method="post" th:object="${estado}">
-        ¿Confirma que desea eliminar el estado de rastreo?
-        <div>
-            <h2 th:text="*{id}"></h2>
-            <p th:text="*{descripcion}"></p>           
-        </div>        
-        <div>
-            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-            <input type="submit" value="Eliminar" class="boton">
-        </div>
-    </form>
-    
-    <p th:if="${mensaje}" th:text="${mensaje}"></p>    
-    
+    <div class="container-mensaje">
+        <h1>Eliminar Estado de Rastreo</h1>
+        <form th:if="${estado}" method="post" th:object="${estado}">
+            ¿Confirma que desea eliminar el estado de rastreo con "id: <span th:text="*{id}"></span>, <span th:text="*{descripcion}"></span>" ?                
+            <div>
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                <input type="submit" value="Eliminar" class="boton">
+            </div>
+        </form>
+        <p th:if="${mensaje}" th:text="${mensaje}" class="errores"></p>  
+        <a th:href="@{/estadosrastreo}" class="volver underline">Volver</a>    
+    </div>    
 </body>
 </html>

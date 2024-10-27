@@ -14,7 +14,7 @@ import jakarta.persistence.criteria.Root;
 public class EspecificacionesEstados {
 
     public static Specification<EstadoRastreo> descripcionContiene(String descripcion) {
-        if (descripcion == null) return null;
+        if (descripcion == null || descripcion.isBlank()) return null;
 
         return new Specification<EstadoRastreo>() {
             @Override
@@ -24,10 +24,12 @@ public class EspecificacionesEstados {
         };
     }
 
+    public static Specification<EstadoRastreo> activo() {
+        return (root, query, criteriaBuilder) -> criteriaBuilder.isTrue(root.get("activo"));
+    }
+    
 
     public static Specification<EstadoRastreo> buscar(String criterio, Pageable pageable) {
-        if (criterio == null || criterio.isBlank()) return null;
-
-        return Specification.where(descripcionContiene(criterio));
+        return Specification.where(descripcionContiene(criterio)).and(activo());
     }
 }

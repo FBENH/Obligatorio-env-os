@@ -9,19 +9,18 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "paquetes")
 public class Paquete {
     
-    @Id
-    @NotNull
+    @Id    
     @Min(0)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
@@ -31,14 +30,17 @@ public class Paquete {
     LocalDateTime fechaHora;
 
     @NotBlank
+    @Size(max = 20)
     @Column(length = 20, nullable = false)
     String nombreDestinatario;
 
     @NotBlank
+    @Size(max = 60)
     @Column(length = 60, nullable = false)
     String direccionDestinatario;
 
     @NotBlank
+    @Size(max = 20)
     @Column(length = 20, nullable = false)
     String telefonoDestinatario;
 
@@ -53,7 +55,7 @@ public class Paquete {
     @NotNull
     EstadoRastreo estadoRastreo;
 
-    @OneToOne
+    @ManyToOne
     @NotNull
     @JoinColumn(name = "nombre_usuario")
     Cliente cliente;    
@@ -131,6 +133,14 @@ public class Paquete {
     }
 
     public Paquete() {
+    }
+
+    @Override
+    public String toString() {
+        return "Paquete [id=" + id + ", fechaHora=" + fechaHora + ", nombreDestinatario=" + nombreDestinatario
+                + ", direccionDestinatario=" + direccionDestinatario + ", telefonoDestinatario=" + telefonoDestinatario
+                + ", cobroADestinatario=" + cobroADestinatario + ", categoria=" + categoria + ", estadoRastreo="
+                + estadoRastreo + ", cliente=" + cliente + "]";
     }
 
     

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragmentos/plantilla-maestra::html(~{::title}, ~{::body})}">
+<head>    
+    <title>Envíos Bios - Mis Envios - Cuenta</title>   
+</head>
+<body th:remove="tag">
+    <h1>Mis Envios</h1> 
+    <p th:if="${mensaje}" th:text="${mensaje}"></p>
+
+    <table class="listado">
+        <tr>
+            <th>Identificador</th><th>Fecha de Registro</th><th>Destinatario</th><th>Estado de Rastreo</th>
+        </tr>
+        <tr th:each="p : ${paquetes}">
+            <td th:text="${p.id}"></td>
+            <td th:text="${#temporals.format(p.fechaHora, 'dd/MM/yyyy HH:mm')}"></td>
+            <td th:text="${p.nombreDestinatario}"></td>
+            <td th:text="${p.estadoRastreo.descripcion}"></td>            
+        </tr>
+    </table>
+
+    <!-- <p>Cantidad de Paquetes: <span th:text="${paquetes.totalElements}"></span></p> -->
+
+    <!-- Navegación de Páginas -->
+    <div class="pagination">
+        <span th:if="${paquetes.hasPrevious()}">
+            <a th:href="@{listar(pagina=${paquetes.number - 1})}" class="icono">Anterior</a>
+        </span>
+        <span th:if="${paquetes.hasPrevious()} and ${paquetes.hasNext()}"> | </span>
+        <span th:if="${paquetes.hasNext()}">
+            <a th:href="@{listar(pagina=${paquetes.number + 1})}" class="icono">Siguiente</a>
+        </span>
+        <p>Página <span th:text="${paquetes.number + 1}"></span> de <span th:text="${paquetes.totalPages}"></span></p>
+    </div>
+    
+</body>
+</html>

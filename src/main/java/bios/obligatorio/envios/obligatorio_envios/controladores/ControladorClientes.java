@@ -1,10 +1,9 @@
 package bios.obligatorio.envios.obligatorio_envios.controladores;
 
 import java.security.Principal;
-import java.util.Locale;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
@@ -28,9 +27,7 @@ public class ControladorClientes {
     
     @Autowired
     IServicioClientes servicioClientes;
-
-    @Autowired
-    private MessageSource messageSource;    
+       
 
     @GetMapping("/registrarcliente")
     public String registro(@ModelAttribute Cliente cliente) {
@@ -75,8 +72,10 @@ public class ControladorClientes {
         
         cliente = servicioClientes.obtener(principal.getName());
 
-        if (cliente != null)
+        if (cliente != null) {
+            model.addAttribute("contrasenaFalsa", UUID.randomUUID().toString());
             model.addAttribute("cliente",cliente);
+        }
         else
             model.addAttribute("mensaje", "Error. No se pudieron obtener los datos de la cuenta");
 
@@ -85,64 +84,30 @@ public class ControladorClientes {
     }
 
     @PostMapping("/micuenta/editar")
-    public String procesarEditarCuenta(@ModelAttribute Cliente cliente, BindingResult result, Model model, RedirectAttributes attributes, @RequestParam(required = false) String passwordrepetida, 
-    @RequestParam(name = "grupo1") String cambiarContrasena, Principal principal) {
-
-        System.out.println(cliente);
+    public String procesarEditarCuenta(@ModelAttribute @Valid Cliente cliente, BindingResult result, Model model, RedirectAttributes attributes, 
+     Principal principal, String contrasenaFalsa) {        
 
         if (result.hasErrors()) {
             model.addAttribute("mensaje", "Error al editar los datos de la cuenta.");
+            model.addAttribute("contrasenaFalsa", UUID.randomUUID().toString());
             return "clientes/editar-cuenta";
         }
-        
-        cliente.setNombreUsuario(principal.getName());
+        try {
+            if (cliente.getRepetirContrasena() == null || !cliente.getRepetirContrasena().equals(cliente.getClave())) {
+                model.addAttribute("contrasenaFalsa", UUID.randomUUID().toString());
+    
+                throw new ExcepcionProyectoEnvios("Las contraseñas no coinciden.");
+            }           
 
-        try {            
-            //Validacion manual al no usar @Valid, permite no cambiar la contraseña ya que no se puede desencriptar de la db y llevarla a la vista
-            if (cliente.getNombreUsuario().isEmpty() || cliente.getNombreUsuario() == null) {
-                model.addAttribute("mensaje", messageSource.getMessage("NotBlank.cliente.nombreUsuario", null, Locale.getDefault()));
-                return "clientes/editar-cuenta";
-            }
+            cliente.setNombreUsuario(principal.getName());
+            servicioClientes.modificar(cliente, !cliente.getClave().equals(contrasenaFalsa));            
 
-            if (cliente.getCedula().isEmpty() || cliente.getCedula() == null) {
-                model.addAttribute("mensaje", messageSource.getMessage("NotBlank.cliente.cedula", null, Locale.getDefault()));
-                return "clientes/editar-cuenta";
-            }
-
-            if (cliente.getDomicilio().isEmpty() || cliente.getDomicilio() == null) {
-                model.addAttribute("mensaje", messageSource.getMessage("NotBlank.cliente.domicilio", null, Locale.getDefault()));
-                return "clientes/editar-cuenta";
-            }
-            if (cliente.getTelefono().isEmpty() || cliente.getTelefono() == null) {
-                model.addAttribute("mensaje", messageSource.getMessage("NotBlank.cliente.telefono", null, Locale.getDefault()));
-                return "clientes/editar-cuenta";
-            }
-
-
-            if ("Si".equals(cambiarContrasena)) {                
-
-                if (cliente.getClave().isEmpty() || cliente.getClave() == null) {
-                    model.addAttribute("mensaje", messageSource.getMessage("NotBlank.cliente.clave", null, Locale.getDefault()));
-                    return "clientes/editar-cuenta";
-                }
-
-                if (!passwordrepetida.equals(cliente.getClave())) {
-                    model.addAttribute("mensaje", "Error. Las contraseñas no coinciden.");
-                    return "clientes/editar-cuenta";
-                }
-
-                servicioClientes.modificar(cliente, true);
-            }
-            else {
-                servicioClientes.modificar(cliente, false);
-            }
-
-            attributes.addFlashAttribute("mensaje", "Se han modificado los datos de la cuenta con éxito");
+            attributes.addFlashAttribute("mensaje","Se modificaron los datos de la cuenta con éxito.");
             return "redirect:/micuenta";
         } catch (ExcepcionProyectoEnvios e) {
-            model.addAttribute("mensaje", "Error al modificar la cuenta. " + e.getMessage());
-            return "clientes/editar-cuenta";
-        }    
+            model.addAttribute("mensaje", "Error al modificar los datos de la cuenta. " + e.getMessage());            
+            return "empleados/modificar";
+        }
     }
 
     @GetMapping("/micuenta/eliminar")

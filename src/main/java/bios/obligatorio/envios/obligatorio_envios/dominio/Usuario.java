@@ -12,8 +12,10 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "usuarios")
@@ -22,16 +24,33 @@ public class Usuario {
 
     @Id    
     @NotBlank
+    @Size(min = 4,max = 25)
     @Column(length = 25)
     String nombreUsuario;
 
     @NotBlank
+    @Size(min = 6, max = 60)
     @Column(length = 60, nullable = false)
     String clave;
 
+    @Transient    
+    private String repetirContrasena;
     
+    @Size(max = 60)
     @Column(length = 60, nullable = true)
     String correo;
+
+    public String getRepetirContrasena() {
+        return repetirContrasena;
+    }
+
+    public void setRepetirContrasena(String repetirContrasena) {
+        this.repetirContrasena = repetirContrasena;
+    }
+
+    public Boolean getActivo() {
+        return activo;
+    }
 
     @NotNull    
     Boolean activo;    

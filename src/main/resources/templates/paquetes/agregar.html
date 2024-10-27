@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragmentos/plantilla-maestra::html(~{::title}, ~{::body})}">
+<head>    
+    <title>Envíos Bios - Paquetes - Agregar</title>   
+</head>
+<body th:remove="tag">
+    <div class="formulario-registro">
+        <h1>Agregar Nuevo Paquete</h1>    
+        <form th:object="${paquete}" method="post">
+            <div class="username-registro">
+                <input type="datetime-local" th:field="*{fechaHora}" />
+                <label>Fecha y Hora</label>
+                <p th:errors="*{fechaHora}" class="errores"></p>
+            </div>
+            <div class="username-registro">
+                <input type="text" th:field="*{nombreDestinatario}" />
+                <label>Nombre del Destinatario</label>
+                <p th:errors="*{nombreDestinatario}" class="errores"></p>
+            </div>
+            <div class="username-registro">
+                <input type="text" th:field="*{direccionDestinatario}" />
+                <label>Dirección del Destinatario</label>
+                <p th:errors="*{direccionDestinatario}" class="errores"></p>
+            </div>
+            <div class="username-registro">
+                <input type="text" th:field="*{telefonoDestinatario}" />
+                <label>Teléfono del Destinatario</label>
+                <p th:errors="*{telefonoDestinatario}" class="errores"></p>
+            </div>
+            <div class="username-registro">
+                <label>Cobro al Destinatario</label>
+                <input type="checkbox" th:field="*{cobroADestinatario}" class="checkbox"/>
+                <p th:errors="*{cobroADestinatario}" class="errores"></p>
+            </div>
+            <div class="username-registro">
+                <select th:field="*{categoria.id}">
+                    <option th:each="categoria : ${categorias}" 
+                            th:value="${categoria.id}" 
+                            th:text="${categoria.nombre}">Seleccionar</option>
+                </select>
+                <label>Seleccionar Categoría</label>
+                <p th:errors="*{categoria.id}" class="errores"></p>
+            </div>
+            <div class="username-registro">
+                <select th:field="*{estadoRastreo.id}">
+                    <option th:each="estado : ${estadosRastreo}" 
+                            th:value="${estado.id}" 
+                            th:text="${estado.descripcion}">Seleccionar</option>
+                </select>
+                <label>Seleccionar Estado de Rastreo</label>
+                <p th:errors="*{estadoRastreo.id}" class="errores"></p>
+            </div>
+            <div class="username-registro">
+                <input type="text" th:field="*{cliente.nombreUsuario}" />
+                <label for="nombreUsuario">Usuario de Cliente</label>
+                <p th:errors="*{cliente.nombreUsuario}" class="errores"></p>
+            </div>
+            <div>
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                <button type="submit" class="boton">Agregar</button>
+            </div>         
+        </form>
+        <p th:if="${mensaje}" th:text="${mensaje}" class="errores"></p>
+        <a th:href="@{/paquetes}" class="volver underline">Volver</a>
+    </div>    
+    <script>
+        document.getElementById('nombreDestinatario').focus();
+        document.getElementById('nombreDestinatario').select();
+    </script>
+</body>
+</html>

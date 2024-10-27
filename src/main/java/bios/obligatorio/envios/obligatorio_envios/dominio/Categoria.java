@@ -6,6 +6,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "categorias")
@@ -16,6 +17,7 @@ public class Categoria {
     Integer id;
 
     @NotBlank
+    @Size(max = 30)
     @Column(length = 30, nullable = false)
     String nombre;
 

@@ -6,7 +6,6 @@
 <body th:remove="tag">
     <h1>Modificar Estado de Rastreo</h1>
 
-    <a th:href="@{/estadosrastreo}" class="volver underline">Volver</a>
     
     <form th:if="${estado}" method="post" th:object="${estado}">
         <div>
@@ -25,7 +24,8 @@
         </div>
     </form>
     
-    <p th:if="${mensaje}" th:text="${mensaje}"></p>
+    <p th:if="${mensaje}" th:text="${mensaje}" class="errores"></p>    
+    <a th:href="@{/estadosrastreo}" class="volver underline">Volver</a>
     
     <script>
         document.getElementById('descripcion').focus();

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragmentos/plantilla-maestra::html(~{::title}, ~{::body})}">
+<head>    
+    <title>Envíos Bios - Paquetes - Detalle</title>   
+</head>
+<body th:remove="tag">
+    <div class="detalle-cuenta">
+        <h1>Detalle de Paquete</h1>
+    
+        <th:block th:if="${paquete}">        
+
+            <ul>
+                <li>Identificador: <span th:text="${paquete.id}" ></span></li>
+                <li>Fecha de Registro: <span th:text="${#temporals.format(paquete.fechaHora, 'dd/MM/yyyy HH:mm')}"></span></li>
+                <li>Nombre Destinatario: <span th:text="${paquete.nombreDestinatario}"></span></li>
+                <li>Direccion Destinatario: <span th:text="${paquete.direccionDestinatario}"></span></li>
+                <li>TelefonoDestinatario: <span th:text="${paquete.telefonoDestinatario}"></span></li>
+                <li>Categoria: <span th:text="${paquete.categoria.nombre}"></span></li>
+                <li>A cobrar: <span th:text="${paquete.cobroADestinatario ? 'Sí' : 'No'}"></span></li>  
+                <li>Estado de Rastreo: <span th:text="${paquete.estadoRastreo.descripcion}"></span></li>  
+                <li>Usuario de cliente: <span th:text="${paquete.cliente} ? ${paquete.cliente.nombreUsuario} : ''"></span></li>
+                <li>Cédula de cliente: <span th:text="${paquete.cliente} ? ${paquete.cliente.cedula} : ''"></span></li>
+            </ul>
+        </th:block>
+        
+        <p th:if="${mensaje}" th:text="${mensaje}" class="errores"></p>   
+        <a th:href="@{/paquetes}" class="volver underline">Volver</a>
+        </div>
+    
+</body>
+</html>

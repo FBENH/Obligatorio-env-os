@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragmentos/plantilla-maestra::html(~{::title}, ~{::body})}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Envíos Bios - Paquetes</title>
+</head>
+<body th:remove="tag">
+    <h1>Paquetes</h1>
+
+    <p th:if="${mensaje}" th:text="${mensaje}"></p>
+
+    <form id="formularioBusqueda" method="get">
+        <div>
+            <input type="hidden" name="filtroEstado" th:value="${param.filtroEstado}" />
+            <input type="hidden" name="filtroFecha" th:value="${param.filtroFecha}">           
+            <input type="search" name="criterio" th:value="${param.criterio}" id="criterio" placeholder="Cédula de Cliente" value="Buscar">
+        </div>
+    </form>
+
+    <p><a th:href="@{paquetes/agregar}" title="Agregar" class="agregar"><i class="ri-add-circle-fill"></i></a></p>
+
+    <form class="form-opciones" id="formularioOpcionesListado" method="get">
+        <div>
+            <input type="hidden" name="criterio" th:value="${param.criterio}">
+            <select name="filtroEstado" id="filtroEstado">
+                <option value="0" th:selected="${param.filtroEstado} ne null and ${param.filtroEstado[0]} eq 0">Todos</option>
+                <option value="1" th:selected="${param.filtroEstado} ne null and ${param.filtroEstado[0]} eq 1">A levantar</option>
+                <option value="2" th:selected="${param.filtroEstado} ne null and ${param.filtroEstado[0]} eq 2">Levantado</option>
+                <option value="3" th:selected="${param.filtroEstado} ne null and ${param.filtroEstado[0]} eq 3">En reparto</option>
+                <option value="4" th:selected="${param.filtroEstado} ne null and ${param.filtroEstado[0]} eq 4">Entregado</option>
+                <option value="5" th:selected="${param.filtroEstado} ne null and ${param.filtroEstado[0]} eq 5">Devuelto</option>
+            </select>                       
+            <select name="tamanioPagina" id="tamanioPagina">
+                <option value="5" th:selected="${param.tamanioPagina} ne null and ${param.tamanioPagina[0]} eq 5">5 x página</option>
+                <option value="10" th:selected="${param.tamanioPagina} ne null and ${param.tamanioPagina[0]} eq 10">10 x página</option>
+                <option value="2" th:selected="${param.tamanioPagina} ne null and ${param.tamanioPagina[0]} eq 2">2 x página</option>
+            </select>
+            <input type="date" id="filtroFecha" name="filtroFecha" th:value="${param.filtroFecha}">
+        </div>
+    </form>
+
+    <table class="listado">
+        <tr>
+            <th>Identificador</th><th>Fecha de Registro</th><th>Destinatario</th><th>Estado de Rastreo</th><th></th>
+        </tr>
+        <tr th:each="p : ${paquetes}">
+            <td th:text="${p.id}"></td>
+            <td th:text="${#temporals.format(p.fechaHora, 'dd/MM/yyyy HH:mm')}"></td>
+            <td th:text="${p.nombreDestinatario}"></td>
+            <td th:text="${p.estadoRastreo.descripcion}"></td>
+            <td>
+                <a th:href="@{/paquetes/{id}(id=${p.id})}" title="Ver Detalle" class="icono"><i class="ri-eye-fill"></i></a>
+                <a th:href="@{/paquetes/modificar(id=${p.id})}" title="Modificar" class="icono"><i class="ri-pencil-fill"></i></a>
+                <a th:href="@{/paquetes/eliminar(id=${p.id})}" title="Eliminar" class="icono"><i class="ri-delete-bin-6-fill"></i></a>                
+            </td>
+        </tr>
+    </table>
+
+    <!-- <p>Cantidad de Paquetes: <span th:text="${paquetes.totalElements}"></span></p> -->
+
+    <!-- Navegación de Páginas -->
+    <div class="pagination">
+        <span th:if="${paquetes.hasPrevious()}">
+            <a th:href="@{paquetes(pagina=${paquetes.number - 1}, criterio=${param.criterio}, filtroEstado=${param.filtroEstado ?: 0}, filtroFecha=${param.filtroFecha}, tamanioPagina=${param.tamanioPagina ?: 5})}" class="icono">Anterior</a>
+        </span>
+        <span th:if="${paquetes.hasPrevious()} and ${paquetes.hasNext()}"> | </span>
+        <span th:if="${paquetes.hasNext()}">
+            <a th:href="@{paquetes(pagina=${paquetes.number + 1}, criterio=${param.criterio}, filtroEstado=${param.filtroEstado ?: 0}, filtroFecha=${param.filtroFecha}, tamanioPagina=${param.tamanioPagina ?: 5})}" class="icono">Siguiente</a>
+        </span>
+        <p>Página <span th:text="${paquetes.number + 1}"></span> de <span th:text="${paquetes.totalPages}"></span></p>
+    </div>
+
+    <script>
+        document.getElementById('formularioBusqueda').addEventListener('submit', (ev) => {
+                if (!document.getElementById('criterio').value) {
+                    ev.preventDefault();
+                    window.location = '/paquetes';
+
+                    return false;
+                }
+            });
+
+        document.getElementById('formularioBusqueda').addEventListener('search', function() {
+            if (!document.getElementById('criterio').value) {
+                window.location = '/paquetes';
+            }
+        });
+
+        document.getElementById('tamanioPagina').addEventListener('change', function() {
+                document.getElementById('formularioOpcionesListado').submit();
+        });
+
+        document.getElementById('filtroEstado').addEventListener('change', function() {
+                document.getElementById('formularioOpcionesListado').submit();
+        });
+
+        document.getElementById('filtroFecha').addEventListener('change', function() {                
+                document.getElementById('formularioOpcionesListado').submit();
+        });
+
+        document.getElementById('criterio').focus();
+        document.getElementById('criterio').select();
+    </script>
+
+</body>
+</html>

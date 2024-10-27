@@ -2,11 +2,13 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragmentos/plantilla-maestra::html(~{::title}, ~{::body})}">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    
     <title>Inicio</title>
 </head>
-<body>
-    <p th:if="${mensaje}" th:text="${mensaje}"></p>
-    <p>Inicio works</p>
+<body class="hero">
+    <p th:if="${mensaje}" th:text="${mensaje}" class="mensaje-inicio"></p>
+    <div class="">
+        
+    </div>    
 </body>
 </html>

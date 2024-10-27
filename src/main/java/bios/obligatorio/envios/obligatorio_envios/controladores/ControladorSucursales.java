@@ -1,8 +1,9 @@
 package bios.obligatorio.envios.obligatorio_envios.controladores;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -28,8 +29,8 @@ public class ControladorSucursales {
     private IServicioSucursales servicioSucursales;
 
     @GetMapping
-    public String sucursales(@RequestParam(required = false) String criterio, Model model) {
-        List<Sucursal> sucursales = servicioSucursales.buscar(criterio);        
+    public String sucursales(@RequestParam(required = false) String criterio, Model model, Pageable pageable) {
+        Page<Sucursal> sucursales = servicioSucursales.buscarConPaginacion(criterio, pageable);        
         model.addAttribute("sucursales", sucursales);
         
         return "sucursales/index";
@@ -116,8 +117,16 @@ public class ControladorSucursales {
     }
 
     @GetMapping("/{numero}")
-    public String verDetalleSucursal(@PathVariable Long numero, Model model) {
-        Sucursal sucursal = servicioSucursales.obtener(numero);
+    public String verDetalleSucursal(@PathVariable String numero, Model model) {
+        Long idSucursal;
+        try {
+            idSucursal = Long.parseLong(numero);
+        } catch (NumberFormatException e) {
+            model.addAttribute("mensaje", "Error. El identificador de la sucursal debe ser un número.");
+            return "sucursales/detalle";
+        }
+
+        Sucursal sucursal = servicioSucursales.obtener(idSucursal);
         if (sucursal != null)
             model.addAttribute("sucursal", sucursal);
         else

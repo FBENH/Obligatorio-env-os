@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import bios.obligatorio.envios.obligatorio_envios.dominio.Sucursal;
@@ -19,6 +21,11 @@ public class ServicioSucursales implements IServicioSucursales{
 
     @Autowired
     private IRepositorioSucursales repositorioSucursales;
+
+    @Override
+    public Page<Sucursal> buscarConPaginacion(String criterio, Pageable pageable) {
+        return repositorioSucursales.findAll(EspecificacionesSucursales.buscarConPaginacion(criterio, pageable), pageable);    
+    }
 
     @Override
     public List<Sucursal> buscar(String criterio) {
