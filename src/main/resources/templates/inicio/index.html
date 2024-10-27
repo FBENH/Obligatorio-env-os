@@ -4,11 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">    
     <title>Inicio</title>
+    <link rel="stylesheet" href="../../static/css/estilos.css">
 </head>
-<body class="hero">
-    <p th:if="${mensaje}" th:text="${mensaje}" class="mensaje-inicio"></p>
-    <div class="">
+<body id="hero">
+    <p th:if="${mensaje}" th:text="${mensaje}" class="mensaje-inicio errores">Se creó tu cuenta</p>    
+    <div class="hero-div">
+        <h2>Envíos Rápidos y <span class="highlight">Seguros</span>.</h2>
+        <p>En Bios Envios, transformamos el envío de paquetes en una experiencia sencilla y segura.</p>
+        <div class="hero-button-container">
+            <a sec:authorize="isAnonymous()" th:href="@{/ingresar}"><button class="hero-button">Realizar Envíos</button></a>
+            <a sec:authorize="hasAuthority('Cliente')" th:href="@{/paquetes/registrar}"><button class="hero-button">Realizar Envíos</button></a>
+            <a sec:authorize="hasAuthority('Empleado')" th:href="@{/paquetes/agregar}"><button class="hero-button">Ingresar Envío</button></a>
+
+        </div>
         
-    </div>    
+    </div> 
+    
+    
 </body>
 </html>

@@ -19,8 +19,7 @@ public class ConfiguracionSeguridad {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(auth -> auth
-        .requestMatchers("/","/static/**").permitAll()
+        http.authorizeHttpRequests(auth -> auth        
         .requestMatchers("/sucursales","/sucursales/**").hasAuthority("Empleado")
         .requestMatchers("/empleados","/empleados/**").hasAuthority("Empleado")
         .requestMatchers("/categorias","/categorias/agregar","/categorias/modificar","/categorias/eliminar").hasAuthority("Empleado")
@@ -44,7 +43,7 @@ public class ConfiguracionSeguridad {
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return web -> web.ignoring().requestMatchers("/css/**");
+        return web -> web.ignoring().requestMatchers("/css/**", "/imagenes/**");
     }
 
     
