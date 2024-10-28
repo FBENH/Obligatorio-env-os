@@ -21,6 +21,8 @@ public interface IRepositorioEstadosRastreo extends JpaRepository<EstadoRastreo,
     
     Page<EstadoRastreo> findAll(Specification<EstadoRastreo> spec, Pageable pageable);    
 
-    Optional<EstadoRastreo> findById(Integer id);
+    Optional<EstadoRastreo> findByIdAndActivoTrue(Integer id);
+
+    List<EstadoRastreo> findAllByActivoTrue();
     
 }

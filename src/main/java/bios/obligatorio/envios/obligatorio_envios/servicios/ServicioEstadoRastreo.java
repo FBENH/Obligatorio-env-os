@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.data.domain.Sort;
 
 import bios.obligatorio.envios.obligatorio_envios.dominio.EstadoRastreo;
 import bios.obligatorio.envios.obligatorio_envios.dominio.Paquete;
@@ -27,7 +26,7 @@ public class ServicioEstadoRastreo implements IServicioEstadoRastreo{
 
     @Override
     public EstadoRastreo obtener(Integer id) {
-        return repositorioEstadosRastreo.findById(id).orElse(null);
+        return repositorioEstadosRastreo.findByIdAndActivoTrue(id).orElse(null);
     }
 
     @Override
@@ -43,7 +42,7 @@ public class ServicioEstadoRastreo implements IServicioEstadoRastreo{
 
     @Override
     public void modificar(EstadoRastreo estado) throws ExcepcionProyectoEnvios {
-        EstadoRastreo estadoRastreoExistente = repositorioEstadosRastreo.findById(estado.getId()).orElse(null);
+        EstadoRastreo estadoRastreoExistente = repositorioEstadosRastreo.findByIdAndActivoTrue(estado.getId()).orElse(null);
 
         if(estadoRastreoExistente == null) {
             throw new ExcepcionNoExiste("El estado no existe.");
@@ -54,12 +53,12 @@ public class ServicioEstadoRastreo implements IServicioEstadoRastreo{
 
     @Override
     public List<EstadoRastreo> listar() {
-        return repositorioEstadosRastreo.findAll(Sort.by("descripcion"));
+        return repositorioEstadosRastreo.findAllByActivoTrue();
     }
 
     @Override    
      public void eliminar(Integer id) throws ExcepcionProyectoEnvios {
-         EstadoRastreo estadoExiste = repositorioEstadosRastreo.findById(id).orElse(null);
+         EstadoRastreo estadoExiste = repositorioEstadosRastreo.findByIdAndActivoTrue(id).orElse(null);
 
          if (estadoExiste == null) { 
              throw new ExcepcionNoExiste("El estado no existe");

@@ -31,5 +31,5 @@ public class EspecificacionesEstados {
 
     public static Specification<EstadoRastreo> buscar(String criterio, Pageable pageable) {
         return Specification.where(descripcionContiene(criterio)).and(activo());
-    }
+    }    
 }
