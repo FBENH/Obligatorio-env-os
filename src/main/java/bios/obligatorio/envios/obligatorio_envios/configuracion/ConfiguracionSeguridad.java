@@ -22,7 +22,7 @@ public class ConfiguracionSeguridad {
         http.authorizeHttpRequests(auth -> auth        
         .requestMatchers("/sucursales","/sucursales/**").hasAuthority("Empleado")
         .requestMatchers("/empleados","/empleados/**").hasAuthority("Empleado")
-        .requestMatchers("/categorias","/categorias/agregar","/categorias/modificar","/categorias/eliminar").hasAuthority("Empleado")
+        .requestMatchers("/categorias","/categorias/**").hasAuthority("Empleado")
         .requestMatchers("/registrarcliente").anonymous()
         .requestMatchers("/micuenta/editar","/micuenta/eliminar","/micuenta").hasAuthority("Cliente")
         .requestMatchers("/estadosrastreo","estadosrastreo/**").hasAuthority("Empleado")

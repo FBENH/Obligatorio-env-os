@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragmentos/plantilla-maestra::html(~{::title}, ~{::body})}">
+<head>    
+    <title>Envíos Bios - Categoria - Eliminar</title>   
+</head>
+<body th:remove="tag">
+    <div class="container-mensaje">
+        <h1>Eliminar Categoria</h1>
+        <form th:if="${categoria}" method="post" th:object="${categoria}">
+            ¿Confirma que desea eliminar la Categoria "<span th:text="*{nombre}"></span>"?                   
+            <div>
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                <input type="submit" value="Eliminar" class="boton">
+            </div>
+        </form>        
+        <p th:if="${mensaje}" th:text="${mensaje}" class="errores"></p>        
+        <a th:href="@{/categorias}" class="volver underline">Volver</a>
+    </div>    
+</body>
+</html>

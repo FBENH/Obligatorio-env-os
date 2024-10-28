@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragmentos/plantilla-maestra::html(~{::title}, ~{::body})}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Envíos Bios - Categorias</title>
+</head>
+<body th:remove="tag">
+    <h1>Categorias</h1>
+
+    <p th:if="${mensaje}" th:text="${mensaje}"></p>
+
+    <form id="formularioBusqueda">
+        <div>
+            <input type="search" name="criterio" th:value="${param.criterio}" id="criterio" placeholder="Identificador o Nombre" value="Buscar">
+        </div>
+    </form>
+
+    <p><a th:href="@{categorias/agregar}" title="Agregar" class="agregar"><i class="ri-add-circle-fill"></i></a></p>
+
+    <table class="listado">
+        <tr>
+            <th>Identificador</th><th>Nombre</th><th></th>
+        </tr>
+        <tr th:each="c : ${categorias}">
+            <td th:text="${c.id}"></td>
+            <td th:text="${c.nombre}"></td>
+            <td>
+                <a th:href="@{/categorias/{id}(id=${c.id})}" title="Ver Detalle" class="icono"><i class="ri-eye-fill"></i></a>
+                <a th:href="@{/categorias/modificar(id=${c.id})}" title="Modificar" class="icono"><i class="ri-pencil-fill"></i></a>
+                <a th:href="@{/categorias/eliminar(id=${c.id})}" title="Eliminar" class="icono"><i class="ri-delete-bin-6-fill"></i></a>                
+            </td>
+        </tr>
+    </table>
+
+    <p>Cantidad de categorias: <span th:text="${categorias.size()}"></span></p>
+
+    <script>
+        document.getElementById('formularioBusqueda').addEventListener('search', function() {
+            if (!document.getElementById('criterio').value) {
+                window.location = '/categorias';
+            }
+        });
+
+        document.getElementById('criterio').focus();
+        document.getElementById('criterio').select();
+    </script>
+
+</body>

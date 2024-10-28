@@ -2,6 +2,8 @@ package bios.obligatorio.envios.obligatorio_envios.dominio;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
@@ -14,6 +16,7 @@ public class Categoria {
     
     @Id
     @Min(0)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
 
     @NotBlank

@@ -1,17 +1,12 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragmentos/plantilla-maestra::html(~{::title}, ~{::body})}">
 <head>    
-    <title>Envíos Bios - Categorias - Modificar</title>   
+    <title>Envíos Bios - Categorias - Agregar</title>   
 </head>
 <body th:remove="tag">
     <div class="formulario-registro">
-        <h1>Modificar Categoria</h1>
-        <form th:if="${categoria}" method="post" th:object="${categoria}">
-            <div class="username-registro">
-                <label for="id">Identificador</label>
-                <input type="number" th:field="*{id}" id="id" disabled>
-                <p th:errors="*{id}" class="errores"></p>
-            </div>
+        <h1>Agregar Categoria</h1>
+        <form method="post" th:object="${categoria}">            
             <div class="username-registro">
                 <label for="nombre">Nombre</label>
                 <input type="text" th:field="*{nombre}">
@@ -19,7 +14,7 @@
             </div>
             <div>
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-                <input type="submit" value="Modificar" class="boton">
+                <input type="submit" value="Agregar" class="boton">
             </div>
         </form>
         
@@ -27,6 +22,7 @@
         <a th:href="@{/categorias}" class="volver underline">Volver</a>
     </div>
     
+
     <script>
         document.getElementById('nombre').focus();
         document.getElementById('nombre').select();

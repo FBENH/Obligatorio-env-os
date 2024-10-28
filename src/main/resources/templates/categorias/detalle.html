@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragmentos/plantilla-maestra::html(~{::title}, ~{::body})}">
+<head>    
+    <title>Envíos Bios - Categorias - Detalle</title>   
+</head>
+<body th:remove="tag">
+    <div class="detalle-cuenta">
+        <h1>Detalle de Categoria</h1>
+        <th:block th:if="${categoria}">
+            <ul>
+                <li>Id: <span th:text="${categoria.id}"></span></li>
+                <li>Nombre: <span th:text="${categoria.nombre}"></span></li>
+            </ul>
+        </th:block>
+        
+        <p th:if="${mensaje}" th:text="${mensaje}" class="errores"></p>   
+        <a th:href="@{/categorias}" class="volver underline">Volver</a>
+    </div>    
+</body>
+</html>

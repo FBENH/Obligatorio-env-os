@@ -9,10 +9,11 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.EntityGraph.EntityGraphType;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import bios.obligatorio.envios.obligatorio_envios.dominio.EstadoRastreo;
 
-public interface IRepositorioEstadosRastreo extends JpaRepository<EstadoRastreo,Integer> {
+public interface IRepositorioEstadosRastreo extends JpaRepository<EstadoRastreo,Integer>, JpaSpecificationExecutor<EstadoRastreo> {
 
     @Override
     @EntityGraph(type = EntityGraphType.LOAD, attributePaths = {"estados_rastreo"})
