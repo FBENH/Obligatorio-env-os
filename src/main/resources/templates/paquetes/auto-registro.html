@@ -10,8 +10,8 @@
 
         <form th:object="${paquete}" method="post">
             <div class="username-registro">
-                <input type="datetime-local" th:field="*{fechaHora}" />
-                <label>Fecha y Hora</label>
+                <input type="datetime" th:field="*{fechaHora}" readonly hidden/>
+                <label hidden>Fecha y Hora</label>
                 <p th:errors="*{fechaHora}" class="errores"></p>
             </div>
             <div class="username-registro">
@@ -44,12 +44,8 @@
                 <p th:errors="*{categoria.id}" class="errores"></p>
             </div>
             <div class="username-registro">
-                <select th:field="*{estadoRastreo.id}">
-                    <option th:each="estado : ${estadosRastreo}" 
-                            th:value="${estado.id}" 
-                            th:text="${estado.descripcion}">Seleccionar</option>
-                </select>
-                <label>Seleccionar Estado de Rastreo</label>
+                <input type="text" th:field="*{estadoRastreo.id}" readonly hidden>                
+                <label hidden>Estado de Rastreo</label>
                 <p th:errors="*{estadoRastreo.id}" class="errores"></p>
             </div>
             <div class="username-registro">

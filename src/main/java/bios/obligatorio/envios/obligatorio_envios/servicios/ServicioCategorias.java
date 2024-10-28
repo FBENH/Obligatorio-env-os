@@ -26,13 +26,15 @@ public class ServicioCategorias implements IServicioCategorias {
 
     @Override
     public void agregar(Categoria categoria) throws ExcepcionProyectoEnvios {
-        repositorioCategorias.save(categoria);
+        repositorioCategorias.save(categoria);        
     }
 
     @Override
     public Categoria obtener(Integer id) {
         return repositorioCategorias.findById(id).orElse(null);
     }
+
+    
 
     @Override
     public void modificar(Categoria categoria) throws ExcepcionProyectoEnvios {

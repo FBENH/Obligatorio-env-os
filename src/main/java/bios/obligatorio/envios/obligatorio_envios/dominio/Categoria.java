@@ -20,7 +20,7 @@ public class Categoria {
     Integer id;
 
     @NotBlank
-    @Size(max = 30)
+    @Size(max = 30)    
     @Column(length = 30, nullable = false)
     String nombre;
 
@@ -41,6 +41,10 @@ public class Categoria {
     }
 
     public Categoria() {
+    }
+
+    public Categoria(String nombre) {
+        this.nombre = nombre;
     }
 
     

@@ -117,16 +117,9 @@ public class ControladorSucursales {
     }
 
     @GetMapping("/{numero}")
-    public String verDetalleSucursal(@PathVariable String numero, Model model) {
-        Long idSucursal;
-        try {
-            idSucursal = Long.parseLong(numero);
-        } catch (NumberFormatException e) {
-            model.addAttribute("mensaje", "Error. El identificador de la sucursal debe ser un número.");
-            return "sucursales/detalle";
-        }
+    public String verDetalleSucursal(@PathVariable Long numero, Model model) {       
 
-        Sucursal sucursal = servicioSucursales.obtener(idSucursal);
+        Sucursal sucursal = servicioSucursales.obtener(numero);
         if (sucursal != null)
             model.addAttribute("sucursal", sucursal);
         else

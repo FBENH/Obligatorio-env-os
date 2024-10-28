@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragmentos/plantilla-maestra::html(~{::title}, ~{::body})}">
+    <head>
+        <title>Error</title>
+    </head>
+    <body th:remove="tag">
+        <div class="texto-centro">
+            <h1>Error</h1>
+
+            <p th:if="${mensaje}" th:text="${mensaje}">No se pudo procesar la solicitud.</p>
+        </div>
+    </body>
+</html>

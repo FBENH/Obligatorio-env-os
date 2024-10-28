@@ -36,7 +36,7 @@ public class ConfiguracionSeguridad {
         ).logout(logout ->  logout
         .logoutUrl("/salir")
         .logoutSuccessUrl("/").permitAll()
-        );       
+        );
 
         return http.build();
     }

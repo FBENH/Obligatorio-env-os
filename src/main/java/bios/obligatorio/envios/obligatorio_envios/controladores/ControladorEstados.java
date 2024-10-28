@@ -62,17 +62,9 @@ public class ControladorEstados {
     }
 
     @GetMapping("/{id}")
-    public String detalleEstado(@PathVariable String id, Model model) {
+    public String detalleEstado(@PathVariable Integer id, Model model) {        
 
-        Integer idEstado;
-        try {
-            idEstado = Integer.parseInt(id);
-        } catch (NumberFormatException e) {
-            model.addAttribute("mensaje", "Error. El identificador del Estado de Rastreo debe ser un número.");
-            return "estados/detalle";
-        }
-
-        EstadoRastreo estadoRastreo = servicioEstadoRastreo.obtener(idEstado);
+        EstadoRastreo estadoRastreo = servicioEstadoRastreo.obtener(id);
 
         if (estadoRastreo != null) 
             model.addAttribute("estado", estadoRastreo);
@@ -125,6 +117,10 @@ public class ControladorEstados {
 
     @PostMapping("/eliminar")
     public String procesarEliminarEstado(Integer id, Model model, RedirectAttributes attributes) {
+        if (id == 1) {
+            model.addAttribute("mensaje", "Error. " + "No se puede eliminar este Estado de Rastreo ya que es el por defecto para el registro de paquetes por parte de clientes.");
+            return "estados/eliminar";
+        }
         try {
              servicioEstadoRastreo.eliminar(id);
 
@@ -136,7 +132,7 @@ public class ControladorEstados {
          catch (ExcepcionProyectoEnvios e) {
             model.addAttribute("mensaje", "Error. " + e.getMessage());
 
-          return "estados/eliminar";
+            return "estados/eliminar";
          }
     }
     

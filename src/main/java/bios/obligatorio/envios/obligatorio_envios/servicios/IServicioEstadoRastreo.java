@@ -12,7 +12,7 @@ public interface IServicioEstadoRastreo {
 
     List<EstadoRastreo> listar();
     Page<EstadoRastreo> buscar(String criterio, Pageable pageable);
-    EstadoRastreo obtener(Integer id);
+    EstadoRastreo obtener(Integer id);    
     void agregar(EstadoRastreo estado) throws ExcepcionProyectoEnvios;
     void modificar(EstadoRastreo empleado) throws ExcepcionProyectoEnvios;
     void eliminar(Integer id) throws ExcepcionProyectoEnvios;

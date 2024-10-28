@@ -28,10 +28,10 @@ public class ServicioClientes implements IServicioClientes{
     @Transactional
     public void registrar(Cliente cliente) throws ExcepcionProyectoEnvios {
         
-        Cliente existe = repositorioClientes.findById(cliente.getNombreUsuario()).orElse(null);
+        Cliente existe = repositorioClientes.findById(cliente.getNombreUsuario()).orElse(null);        
 
         if (existe != null)
-            throw new ExcepcionYaExiste("Error. Ya existe una cuenta con el nombre de usuario seleccionado.");
+            throw new ExcepcionYaExiste("Ya existe una cuenta con el nombre de usuario seleccionado.");
 
         String contrasenaEncriptada = passwordEncoder.encode(cliente.getClave());
         cliente.setClave(contrasenaEncriptada);

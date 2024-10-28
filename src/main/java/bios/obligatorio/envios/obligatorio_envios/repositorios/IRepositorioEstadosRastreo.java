@@ -23,6 +23,6 @@ public interface IRepositorioEstadosRastreo extends JpaRepository<EstadoRastreo,
 
     Optional<EstadoRastreo> findByIdAndActivoTrue(Integer id);
 
-    List<EstadoRastreo> findAllByActivoTrue();
+    List<EstadoRastreo> findAllByActivoTrue();    
     
 }

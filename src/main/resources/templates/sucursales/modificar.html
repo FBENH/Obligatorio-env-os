@@ -9,6 +9,7 @@
         <form th:if="${sucursal}" method="post" th:object="${sucursal}" class="form-registro">
             <div class="username-registro">
                 <input type="number" th:field="*{numero}" id="numero" disabled>
+                <input type="number" th:field="*{numero}" hidden>
                 <label for="numero">Número</label>
                 <p th:errors="*{numero}" class="errores"></p>
             </div>

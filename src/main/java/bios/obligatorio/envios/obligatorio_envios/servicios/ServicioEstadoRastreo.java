@@ -35,8 +35,7 @@ public class ServicioEstadoRastreo implements IServicioEstadoRastreo{
     }
 
     @Override
-    public void agregar(EstadoRastreo estado) throws ExcepcionProyectoEnvios {        
-
+    public void agregar(EstadoRastreo estado) throws ExcepcionProyectoEnvios { 
         repositorioEstadosRastreo.save(estado);
     }
 

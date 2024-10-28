@@ -9,7 +9,8 @@
         <h1>Editar</h1>
         <form method="post" class="form-registro" th:object="${cliente}">
             <div class="username-registro">                            
-                <input type="text" name="username" id="nombreUsuario" th:field="*{nombreUsuario}" readonly>
+                <input type="text" name="username" th:field="*{nombreUsuario}" th:disabled="true">
+                <input type="text" name="username" id="nombreUsuario" th:field="*{nombreUsuario}" hidden>
                 <label for="nombreUsuario">Nombre de Usuario</label> 
                 <p th:errors="*{nombreUsuario}" class="errores"></p>
             </div>

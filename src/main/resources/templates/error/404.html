@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragmentos/plantilla-maestra::html(~{::title}, ~{::body})}">
+    <head>
+        <title>Página no encontrada.</title>
+    </head>
+    <body th:remove="tag">
+        <div class="texto-centro">
+            <h1>Página no encontrada</h1>
+
+            <p>No se encontró la página solicitada.</p>
+        </div>
+    </body>
+</html>

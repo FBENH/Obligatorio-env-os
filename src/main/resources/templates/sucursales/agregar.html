@@ -15,7 +15,7 @@
             <div class="username-registro">
                 <input type="text" th:field="*{nombre}">
                 <label for="nombre">Nombre</label>
-                <p th:errors="*{nombre}"></p>
+                <p th:errors="*{nombre}" class="errores"></p>
             </div>
             <div>
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">

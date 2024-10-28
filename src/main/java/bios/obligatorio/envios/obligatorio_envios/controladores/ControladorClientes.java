@@ -106,7 +106,7 @@ public class ControladorClientes {
             return "redirect:/micuenta";
         } catch (ExcepcionProyectoEnvios e) {
             model.addAttribute("mensaje", "Error al modificar los datos de la cuenta. " + e.getMessage());            
-            return "empleados/modificar";
+            return "clientes/editar-cuenta";
         }
     }
 

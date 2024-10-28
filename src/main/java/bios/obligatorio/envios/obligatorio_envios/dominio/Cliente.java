@@ -19,7 +19,7 @@ public class Cliente extends Usuario {
     
     @NotBlank
     @Size(min = 8, max = 8)
-    @Column(length = 8, nullable = false, unique = true)    
+    @Column(length = 8, nullable = false)    
     String cedula;
 
     @NotBlank

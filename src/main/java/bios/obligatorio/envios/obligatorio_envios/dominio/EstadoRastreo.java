@@ -44,11 +44,7 @@ public class EstadoRastreo {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
-    }
-
-    public EstadoRastreo() {
-        this.activo = true;
-    }
+    }    
 
     public Boolean isActivo() {
         return activo;
@@ -58,7 +54,14 @@ public class EstadoRastreo {
         this.activo = activo;
     }
 
-    
+    public EstadoRastreo() {
+        this.activo = true;
+    }
+
+    public EstadoRastreo(String descripcion) {
+        this.activo = true;
+        this.descripcion = descripcion;
+    }
 
 
 }

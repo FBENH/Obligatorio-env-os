@@ -2,6 +2,7 @@ package bios.obligatorio.envios.obligatorio_envios.controladores;
 
 import java.security.Principal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -62,15 +63,8 @@ public class ControladorPaquetes {
     }
 
     @GetMapping("/{id}")
-    public String verDetallePaquete(@PathVariable String id, Model model) {
-        Integer idPaquete;
-        try {
-            idPaquete = Integer.parseInt(id);
-        } catch (NumberFormatException e) {
-            model.addAttribute("mensaje", "Error. El identificador del paquete debe ser un número.");
-            return "sucursales/detalle";
-        }
-        Paquete paquete = servicioPaquete.obtener(idPaquete);
+    public String verDetallePaquete(@PathVariable Integer id, Model model) {        
+        Paquete paquete = servicioPaquete.obtener(id);
         if (paquete != null)
             model.addAttribute("paquete", paquete);
         else
@@ -109,7 +103,8 @@ public class ControladorPaquetes {
     }
 
     @GetMapping("/modificar")
-    public String modificarPaquete(Integer id, Model model) {
+    public String modificarPaquete(Integer id, Model model) {        
+
         model.addAttribute("estados", servicioEstadoRastreo.listar());
         model.addAttribute("categorias", servicioCategorias.listar());
 
@@ -145,7 +140,8 @@ public class ControladorPaquetes {
     }
 
     @GetMapping("/eliminar")
-    public String mostrarEliminarPaquete(Integer id, Model model) {
+    public String mostrarEliminarPaquete(Integer id, Model model) {       
+
         Paquete paquete = servicioPaquete.obtener(id);
 
         if (paquete != null) {
@@ -173,26 +169,28 @@ public class ControladorPaquetes {
     }
 
     @GetMapping("/registrar")
-    public String autoRegistroPaquete(@ModelAttribute Paquete paquete, Model model, Principal principal) {    
-        paquete.setCliente(servicioClientes.obtener(principal.getName()));    
-        model.addAttribute("categorias", servicioCategorias.listar());
-        model.addAttribute("estadosRastreo", servicioEstadoRastreo.listar());        
+    public String autoRegistroPaquete(@ModelAttribute Paquete paquete, Model model, Principal principal) {         
+        paquete.setFechaHora(LocalDateTime.now());
+        paquete.setEstadoRastreo(servicioEstadoRastreo.obtener(1));      
+        model.addAttribute("categorias", servicioCategorias.listar());        
 
         return "paquetes/auto-registro";
     }
 
     @PostMapping("/registrar")
-    public String procesarAutoRegistroPaquete(@ModelAttribute @Valid Paquete paquete, BindingResult result, Model model, RedirectAttributes attributes, Principal principal) {       
+    public String procesarAutoRegistroPaquete(@ModelAttribute @Valid Paquete paquete, BindingResult result, Model model, RedirectAttributes attributes, Principal principal) {
 
-        if (result.hasErrors()) {            
-            model.addAttribute("categorias", servicioCategorias.listar());
-            model.addAttribute("estadosRastreo", servicioEstadoRastreo.listar());            
-            paquete.setCliente(servicioClientes.obtener(principal.getName()));    
-
+        if (result.hasErrors()) {   
+            paquete.setFechaHora(LocalDateTime.now());
+            paquete.setEstadoRastreo(servicioEstadoRastreo.obtener(1));         
+            model.addAttribute("categorias", servicioCategorias.listar());                       
+                                
             return "paquetes/auto-registro";
         }
 
-        try {               
+        try {   
+            paquete.setCliente(servicioClientes.obtener(principal.getName()));
+            paquete.setFechaHora(LocalDateTime.now());            
             servicioPaquete.agregar(paquete);  
             attributes.addFlashAttribute("mensaje", "Se creó el paquete con éxito"); 
             return "redirect:/paquetes/listar";
@@ -212,4 +210,5 @@ public class ControladorPaquetes {
 
         return "paquetes/listar";
     }
+    
 }

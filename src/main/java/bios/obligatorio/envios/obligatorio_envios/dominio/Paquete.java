@@ -134,17 +134,4 @@ public class Paquete {
 
     public Paquete() {
     }
-
-    @Override
-    public String toString() {
-        return "Paquete [id=" + id + ", fechaHora=" + fechaHora + ", nombreDestinatario=" + nombreDestinatario
-                + ", direccionDestinatario=" + direccionDestinatario + ", telefonoDestinatario=" + telefonoDestinatario
-                + ", cobroADestinatario=" + cobroADestinatario + ", categoria=" + categoria + ", estadoRastreo="
-                + estadoRastreo + ", cliente=" + cliente + "]";
-    }
-
-    
-
-    
-
 }

@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragmentos/plantilla-maestra::html(~{::title}, ~{::body})}">
+    <head>
+        <title>Acceso No Autorizado</title>
+    </head>
+    <body th:remove="tag">
+        <div class="texto-centro">
+            <h1>Acceso No Autorizado</h1>
+
+            <p>No tienes los permisos suficientes para acceder a esta página.</p>
+        </div>
+    </body>
+</html>

@@ -10,4 +10,6 @@ import bios.obligatorio.envios.obligatorio_envios.dominio.Categoria;
 public interface IRepositorioCategorias extends JpaRepository<Categoria,Integer>, JpaSpecificationExecutor<Categoria> {
     
     Optional<Categoria> findById(Integer id);
+
+    
 }
